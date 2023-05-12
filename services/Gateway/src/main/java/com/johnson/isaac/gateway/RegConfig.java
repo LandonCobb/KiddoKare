@@ -10,9 +10,12 @@ public class RegConfig {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("service-name", r -> r.path("/base-url/**")
-                        .filters(f -> f.filter(new JwtFilter()))
-                        .uri("lb://base-url"))
+                .route("schedule", r -> r.path("/schedule/**")
+//                        .filters(f -> f.filter(new JwtFilter()))
+                        .uri("lb://schedule"))
+                .route("SitterProfileAPI", r -> r.path("/sitter/**")
+//                        .filters(f -> f.filter(new JwtFilter()))
+                        .uri("lb://SitterProfileAPI"))
                 .build();
     }
 }

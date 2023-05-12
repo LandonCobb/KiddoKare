@@ -20,9 +20,8 @@ services:
       - "8761:8761"
     networks:
       - net
-
   #----Schedule----
-  cart-service:
+  schedule-service:
     restart: always
     build:
       context: ./services/schedule/
@@ -42,8 +41,25 @@ services:
       - eureka
     networks:
       - net
-#----Mongo----
-  container_name: mongo
+  #-------Sitter------
+  sitter-service:
+    container_name: Sitter-service
+    build:
+      context: ./services/SitterProfile
+      dockerfile: Dockerfile
+    image: sitterserviceapi:1
+    restart: always
+    hostname: sitterserviceapi
+    networks:
+      - net
+    depends_on:
+      - mongo
+      - eureka
+      - gateway
+
+  #----Mongo----
+  mongo:
+    container_name: mongo
     image: mongo:latest
     restart: always
     deploy:

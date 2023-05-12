@@ -1,6 +1,7 @@
 package com.johnson.isaac.gateway;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 
 public class JwtUtil {
@@ -10,6 +11,7 @@ public class JwtUtil {
     private String token;
     private boolean isValid;
     private Claims body;
+    private boolean isExpired;
 
     public JwtUtil(String token) {
         // TODO: 4/14/2023 add checks for all the errors
@@ -18,6 +20,9 @@ public class JwtUtil {
         try {
             this.body = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
             this.isValid = true;
+        } catch (ExpiredJwtException e) {
+            this.isValid = false;
+            this.isExpired = true;
         } catch (Exception e) {
             this.isValid = false;
         }
@@ -46,5 +51,13 @@ public class JwtUtil {
 
     public void setBody(Claims body) {
         this.body = body;
+    }
+
+    public boolean isExpired() {
+        return isExpired;
+    }
+
+    public void setExpired(boolean expired) {
+        isExpired = expired;
     }
 }

@@ -18,6 +18,8 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
+
+<!--        this is for mogoDB-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -37,9 +39,21 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
+        <!--this is for eureka-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
+        <!--        this is to create the item container-->
+        <finalName>SitterProfileAPI</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

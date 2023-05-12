@@ -26,11 +26,11 @@ mongoose.connection.on("connected", () => {
   ScheduleModel.collection.createIndex({ expires: 1 }, { expireAfterSeconds: 0 });
 });
 mongoose.connection.on("error", (e) => console.log(`[${process.pid}] ${e}`));
-Eurika.registerWithEureka("schedule", 1000);
+Eurika.registerWithEureka("schedule", 8080);
 app.use((req, _, next) => {
   console.log(`[${process.pid}] ${req.method} ${req.url}`);
   next();
 });
 app.listen(1000, () =>
-  console.log(`[${process.pid}] Listening on port ${1000}`)
+  console.log(`[${process.pid}] Listening on port ${8080}`)
 );
