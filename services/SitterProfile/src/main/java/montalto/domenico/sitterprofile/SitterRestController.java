@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 
 //change the port number with the port of our frontend
@@ -30,7 +31,7 @@ public class SitterRestController {
     //localhost:8081/sitter/search/byEmail/ (YOU NEED AN email as a Header)
     @GetMapping(path = "/search/byEmail")
     @ResponseStatus(code = HttpStatus.OK)
-    public List<Sitter> searchSitterByEmail(@RequestHeader("X-Email") String email){
+    public Sitter searchSitterByEmail(@RequestHeader("X-Email") String email){
         return sitterRepo.findByEmailContaining(email);
     }
 
@@ -39,8 +40,15 @@ public class SitterRestController {
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
     public void createSitter(@RequestBody Sitter sitter) {
-        sitter.setSitterUUID(UUID.randomUUID());
-        sitterRepo.save(sitter);
+
+        Sitter sitterAlreadyExisting = sitterRepo.findByEmailContaining(sitter.getEmail());
+
+        if (sitterAlreadyExisting == null){
+            sitter.setSitterUUID(UUID.randomUUID());
+            sitterRepo.save(sitter);
+        } else {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already registered");
+        }
     }
 
     //Post
