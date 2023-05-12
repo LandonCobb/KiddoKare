@@ -42,6 +42,9 @@
     </dependencies>
 
     <build>
+        <!--        this is to create the item container-->
+        <finalName>SitterProfileAPI</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

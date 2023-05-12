@@ -41,6 +41,21 @@ services:
       - eureka
     networks:
       - net
+  #-------Sitter------
+  sitter-service:
+    container_name: Sitter-service
+    build:
+      context: ./SitterProfile
+      dockerfile: Dockerfile
+    image: sitterserviceapi:1
+    restart: always
+    hostname: sitterserviceapi
+    networks:
+      - net
+    depends_on:
+      - mongo
+      - eureka
+      - gateway
 
   #----Mongo----
   mongo:
