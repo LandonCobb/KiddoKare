@@ -57,6 +57,22 @@ services:
       - eureka
       - gateway
 
+  #----Parent----
+  parent-profile-service:
+    container_name: Parent-Profile-Service
+    build:
+      context: ./services/parent-profile-service
+      dockerfile: Dockerfile
+    image: parentprofileserviceapi:1
+    restart: always
+    hostname: parent-profile-service
+    networks:
+      - net
+    depends_on:
+      - mongo
+      - eureka
+      - gateway
+
   #----Mongo----
   mongo:
     container_name: mongo
