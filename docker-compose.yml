@@ -21,6 +21,43 @@ services:
     networks:
       - net
 
+  #----Schedule----
+  cart-service:
+    restart: always
+    build:
+      context: ./services/schedule/
+    # deploy:
+    #   mode: replicated
+    #   replicas: 3
+    #   resources:
+    #     limits:
+    #       cpus: "0.25"
+    #       memory: 128M
+    #     reservations:
+    #       memory: 64M
+    links:
+      - mongo
+    depends_on:
+      - mongo
+      - eureka
+    networks:
+      - net
+#----Mongo----
+  container_name: mongo
+    image: mongo:latest
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          memory: 64M
+    ports:
+      - "8989:27017"
+    networks:
+      - net
+
 networks:
   net:
     driver: bridge
