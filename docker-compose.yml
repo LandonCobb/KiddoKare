@@ -38,7 +38,7 @@ services:
       - mongo
     depends_on:
       - mongo
-      - eurika
+      - eureka
     networks:
       - net
 
