@@ -27,20 +27,11 @@ public class SitterRestController {
     }
 
     //GET
-    //localhost:8081/sitter/search/byName/{name} (YOU NEED A name)
-    @GetMapping(path = "/search/byName/{name}")
+    //localhost:8081/sitter/search/byEmail/ (YOU NEED AN email as a Header)
+    @GetMapping(path = "/search/byEmail")
     @ResponseStatus(code = HttpStatus.OK)
-    public List<Sitter> searchSitterByName(@PathVariable(required = true) String name){
-        return sitterRepo.findByNameContaining(name);
-    }
-
-    //GET
-    //localhost:8081/sitter/search/byUUID/{sitterUUID} (YOU NEED A sitterUUID)
-    @GetMapping(path = "/search/byUUID/{sitterUUID}")
-    @ResponseStatus(code = HttpStatus.OK)
-    public Sitter searchSitterByUUID(@PathVariable UUID sitterUUID){
-
-        return sitterRepo.findById(sitterUUID).orElseThrow(() -> new NoSuchElementException());
+    public List<Sitter> searchSitterByEmail(@RequestHeader("X-Email") String email){
+        return sitterRepo.findByEmailContaining(email);
     }
 
     //Post
@@ -63,4 +54,24 @@ public class SitterRestController {
         }
     }
 
+    //Put
+    //localhost:8081/sitter
+
+    @PutMapping(path = "")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateSitter(@RequestHeader("X-Email") String email, @RequestBody Sitter sitter){
+        if(!sitter.getEmail().equals(email)) {
+            throw new RuntimeException("the two values did not match");
+        }
+        sitterRepo.save(sitter);
+    }
+
+    //Delete
+    //localhost:8081/sitter
+
+    @DeleteMapping("")
+    @ResponseStatus(code = HttpStatus.OK)
+    public void deleteSitter(@RequestHeader("X-Email") String email){
+        sitterRepo.deleteByEmail(email);
+    }
 }
