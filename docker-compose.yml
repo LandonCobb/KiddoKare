@@ -21,6 +21,18 @@ services:
     networks:
       - net
 
+#----Node Registry----
+  registry:
+    container_name: registry
+    build:
+      context: ./services/svc-registry/
+      dockerfile: DockerFile
+    ports:
+      - "8080:8080"
+      - "8761:8761"
+    networks:
+      - net
+
   #----Schedule----
   schedule-service:
     restart: always
@@ -39,7 +51,7 @@ services:
       - mongo
     depends_on:
       - mongo
-      - eureka
+      - registry
     networks:
       - net
 
