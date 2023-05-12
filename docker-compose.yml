@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+
+  #----Gateway----
+  gateway:
+    build: ./services/Gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_URL=http://eureka:8761/eureka
+    networks:
+      - net
+
+  #----Eureka----
+  eureka:
+    container_name: eureka
+    build: ./services/Eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
