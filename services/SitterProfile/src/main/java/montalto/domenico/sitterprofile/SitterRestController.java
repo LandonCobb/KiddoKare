@@ -27,7 +27,7 @@ public class SitterRestController {
     }
 
     //GET
-    //localhost:8081/sitter/{name}
+    //localhost:8081/sitter/search/byName/{name} (YOU NEED A name)
     @GetMapping(path = "/search/byName/{name}")
     @ResponseStatus(code = HttpStatus.OK)
     public List<Sitter> searchSitterByName(@PathVariable(required = true) String name){
@@ -35,7 +35,7 @@ public class SitterRestController {
     }
 
     //GET
-    //localhost:8081/sitter/{sitterUUID} (YOU NEED A sitterUUID)
+    //localhost:8081/sitter/search/byUUID/{sitterUUID} (YOU NEED A sitterUUID)
     @GetMapping(path = "/search/byUUID/{sitterUUID}")
     @ResponseStatus(code = HttpStatus.OK)
     public Sitter searchSitterByUUID(@PathVariable UUID sitterUUID){
