@@ -42,8 +42,10 @@ services:
       - eureka
     networks:
       - net
-#----Mongo----
-  container_name: mongo
+
+  #----Mongo----
+  mongo:
+    container_name: mongo
     image: mongo:latest
     restart: always
     deploy:
