@@ -51,4 +51,16 @@ public class SitterRestController {
         sitter.setSitterUUID(UUID.randomUUID());
         sitterRepo.save(sitter);
     }
+
+    //Post
+    //localhost:8081/sitter/addSitters (YOU NEED A BODY WITH A LIST OF SITTER OBJS)
+
+    @PostMapping(path = "/addSitters")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createSitters(@RequestBody List<Sitter> sitters) {
+        for(Sitter sitter : sitters) {
+            createSitter(sitter);
+        }
+    }
+
 }
