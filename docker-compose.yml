@@ -20,7 +20,6 @@ services:
       - "8761:8761"
     networks:
       - net
-
   #----Schedule----
   schedule-service:
     restart: always
@@ -39,7 +38,7 @@ services:
       - mongo
     depends_on:
       - mongo
-      - eureka
+      - eurika
     networks:
       - net
 

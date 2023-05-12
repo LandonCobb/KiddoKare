@@ -2,7 +2,7 @@ import axios from "axios";
 import ip from "ip";
 import Resilient from "resilient";
 
-const eurekaService = `http://registry:8080/eureka`;
+const eurekaService = `http://eureka:8671/eureka`;
 
 /**
  * Makes a random string of size @param length
