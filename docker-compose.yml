@@ -22,7 +22,7 @@ services:
       - net
 
   #----Schedule----
-  cart-service:
+  schedule-service:
     restart: always
     build:
       context: ./services/schedule/
