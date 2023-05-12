@@ -13,6 +13,9 @@ public class RegConfig {
                 .route("schedule", r -> r.path("/schedule/**")
 //                        .filters(f -> f.filter(new JwtFilter()))
                         .uri("lb://schedule"))
+                .route("SitterProfileAPI", r -> r.path("/sitter/**")
+//                        .filters(f -> f.filter(new JwtFilter()))
+                        .uri("lb://SitterProfileAPI"))
                 .build();
     }
 }

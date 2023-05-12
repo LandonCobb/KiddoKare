@@ -45,7 +45,7 @@ services:
   sitter-service:
     container_name: Sitter-service
     build:
-      context: ./SitterProfile
+      context: ./services/SitterProfile
       dockerfile: Dockerfile
     image: sitterserviceapi:1
     restart: always
