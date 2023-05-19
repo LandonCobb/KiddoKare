@@ -19,6 +19,8 @@ public class Sitter {
 
     private String address;
 
+    private String bio;
+
     public UUID getSitterUUID() {
         return sitterUUID;
     }
@@ -57,5 +59,13 @@ public class Sitter {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }

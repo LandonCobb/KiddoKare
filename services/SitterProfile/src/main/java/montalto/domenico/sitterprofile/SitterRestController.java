@@ -83,6 +83,9 @@ public class SitterRestController {
         if(sitter.getAddress() != null) {
             oldSitter.setAddress(sitter.getAddress());
         }
+        if(sitter.getBio() != null) {
+            oldSitter.setBio(sitter.getBio());
+        }
         sitterRepo.save(oldSitter);
     }
 
