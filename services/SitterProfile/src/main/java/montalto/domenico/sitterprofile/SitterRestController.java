@@ -71,6 +71,11 @@ public class SitterRestController {
         if(!sitter.getEmail().equals(email)) {
             throw new RuntimeException("the two values did not match");
         }
+        Sitter oldSitter = sitterRepo.findByEmailContaining(email);
+        if (sitter.getEmail() != null) {
+            oldSitter.setEmail(sitter.getEmail());
+        }
+
         sitterRepo.save(sitter);
     }
 

@@ -11,6 +11,6 @@ COPY --from=build /home/app/target/SitterProfileAPI.war /usr/local/tomcat/webapp
 
 ENV SERVER_PORT=8080
 ENV MONGO_HOST=mongo
-ENV MONGO_PORT=8989
+ENV MONGO_PORT=27017
 ENV MONGO_DB=SitterDB
 ENV EUREKA_HOST=eureka
