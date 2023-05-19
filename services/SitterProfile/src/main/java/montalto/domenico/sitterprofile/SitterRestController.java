@@ -68,9 +68,7 @@ public class SitterRestController {
     @PutMapping(path = "")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateSitter(@RequestHeader("X-Email") String email, @RequestBody Sitter sitter){
-        if(!sitter.getEmail().equals(email)) {
-            throw new RuntimeException("the two values did not match");
-        }
+
         Sitter oldSitter = sitterRepo.findByEmailContaining(email);
 
         if (sitter.getEmail() != null) {
