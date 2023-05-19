@@ -21,6 +21,8 @@ public class Sitter {
 
     private String bio;
 
+    private String scheduleId;
+
     public UUID getSitterUUID() {
         return sitterUUID;
     }
@@ -67,5 +69,13 @@ public class Sitter {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getScheduleId() {
+        return scheduleId;
+    }
+
+    public void setScheduleId(String scheduleId) {
+        this.scheduleId = scheduleId;
     }
 }
