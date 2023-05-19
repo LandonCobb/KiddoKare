@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -26,7 +25,6 @@ public class ParentRestController {
         }
 
         parent.setParentUUID(UUID.randomUUID()); // Generate UUID
-        parent.setCreationDate(LocalDate.now()); // Generate creation date
         parentRepo.save(parent); // Save parent profile
     }
 
@@ -68,8 +66,11 @@ public class ParentRestController {
                 newParent.setAddress(oldParent.getAddress());
             }
 
+            if (newParent.getBio() == null) {
+                newParent.setBio(oldParent.getBio());
+            }
+
             newParent.setParentUUID(oldParent.getParentUUID()); // UUID should never change
-            newParent.setCreationDate(oldParent.getCreationDate()); // Creation date should never change
 
             parentRepo.save(newParent);
         } else {

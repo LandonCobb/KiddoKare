@@ -12,7 +12,7 @@ public class Parent {
     private String password;
     private String email;
     private String address;
-    private LocalDate creationDate;
+    private String bio;
 
     public UUID getParentUUID() {
         return parentUUID;
@@ -54,11 +54,11 @@ public class Parent {
         this.address = address;
     }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
+    public String getBio() {
+        return bio;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }
