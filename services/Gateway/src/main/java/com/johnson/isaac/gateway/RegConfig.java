@@ -16,6 +16,9 @@ public class RegConfig {
                 .route("SitterProfileAPI", r -> r.path("/sitter/**")
 //                        .filters(f -> f.filter(new JwtFilter()))
                         .uri("lb://SitterProfileAPI"))
+                .route("parent-profile-service", r -> r.path("/parent/**")
+//                        .filters(f -> f.filter(new JwtFilter()))
+                        .uri("lb://parent-profile-service"))
                 .build();
     }
 }
