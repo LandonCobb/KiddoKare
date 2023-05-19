@@ -22,11 +22,11 @@ const makeId = (length) => {
 
 const id = makeId(5);
 
-export default {
+const eureka = {
   /**
    * Registers the service with Eureka
    * @param {String} appName name of service
-   * @param {Number} port port app is runnong on
+   * @param {Number} port port app is running on
    */
   registerWithEureka: (appName, port) => {
     axios
@@ -34,7 +34,7 @@ export default {
         `${eurekaService}/apps/${appName}`,
         JSON.stringify({
           instance: {
-            hostName: `localhost`,
+            hostName: `schedule-service`,
             instanceId: `${id}`,
             vipAddress: `${appName}`,
             app: `${appName.toUpperCase()}`,
@@ -73,11 +73,12 @@ export default {
             );
         }, 50 * 1000);
       })
-      .catch((error) =>
+      .catch((error) => {
         console.log(
-          ` [${process.pid}] Not registered with eureka due to: ${error}`
-        )
-      );
+          `[${process.pid}] Not registered with eureka due to: ${error}`
+        );
+        eureka.registerWithEureka(appName, port);
+      });
   },
   /**
    * Get all the registered services from Eureka
@@ -107,3 +108,5 @@ export default {
     return null;
   },
 };
+
+export default eureka;
