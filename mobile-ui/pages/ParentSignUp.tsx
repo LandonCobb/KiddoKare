@@ -17,8 +17,8 @@ const ParentSignUp = () => {
             paddingBottom: "1.5%",
             paddingRight: "3%",
             paddingLeft: "3%",
-            marginTop: "1.5%",
-            marginBottom: "1.5%",
+            marginTop: "0.5%",
+            marginBottom: "0.5%",
             width: "75%",
         },
 
@@ -33,6 +33,7 @@ const ParentSignUp = () => {
         SignUpHeader: {
             padding: "3%",
             fontSize: 48,
+            fontWeight: "300",
             color: "#ffffff",
         },
 
@@ -41,18 +42,22 @@ const ParentSignUp = () => {
             marginBottom: "0.5%",
             marginRight: "3%",
             fontSize: 20,
-            color: "#d0d0d0",
+            fontWeight: "500",
+            color: "#a0a0a0",
         },
 
         TextInput: {
             alignItems: "stretch",
             borderRadius: 5,
-            padding: "1.5%",
+            paddingTop: "3%",
+            paddingBottom: "3%",
+            paddingLeft: "3%",
+            paddingRight: "3%",
             marginTop: "1.5%",
             marginBottom: "1.5%",
             fontSize: 24,
             color: "#ffffff",
-            backgroundColor: "#121212",
+            backgroundColor: "#0d0d0d",
         },
     });
 
