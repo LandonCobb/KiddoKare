@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class RegConfig {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+        // uncomment filters to enable jwt filtering
         return builder.routes()
                 .route("schedule", r -> r.path("/schedule/**")
 //                        .filters(f -> f.filter(new JwtFilter()))
@@ -19,6 +20,8 @@ public class RegConfig {
                 .route("parent-profile-service", r -> r.path("/parent/**")
 //                        .filters(f -> f.filter(new JwtFilter()))
                         .uri("lb://parent-profile-service"))
+                .route("auth-service", r -> r.path("/auth/**")
+                        .uri("lb://auth-service"))
                 .build();
     }
 }
