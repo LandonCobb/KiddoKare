@@ -57,7 +57,7 @@ const ParentSignUp = () => {
             marginBottom: "1.5%",
             fontSize: 24,
             color: "#ffffff",
-            backgroundColor: "#0d0d0d",
+            backgroundColor: "#181818",
         },
     });
 
