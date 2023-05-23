@@ -32,7 +32,7 @@ export default [
       async (req, res) => {
         try {
           const schedule = await ScheduleModel.create({});
-          return res.status(201).json(schedule._id);
+          return res.status(201).send(schedule._id.toString());
         } catch {
           return res.sendStatus(400);
         }
