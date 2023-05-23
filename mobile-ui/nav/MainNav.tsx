@@ -1,7 +1,7 @@
 import { Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ParentProfile from "../pages/ParentProfile";
-import SitterProfile from "../pages/SitterProfile";
+import SitterProfile from "../pages/SitterSignUp";
 import Login from "../pages/Login";
 
 const Tab = createBottomTabNavigator();
