@@ -4,7 +4,9 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 
@@ -44,7 +46,23 @@ public class SitterRestController {
         Sitter sitterAlreadyExisting = sitterRepo.findByEmailContaining(sitter.getEmail());
 
         if (sitterAlreadyExisting == null){
+
+            String host;
+
+            if(System.getenv().containsKey("GATEWAY_SERVICE")){
+                host = System.getenv("GATEWAY_SERVICE");
+            } else {
+                host = "localhost";
+            }
+
+            String url = "http://" + host + ":8080/schedule";
+
+            RestTemplate rest = new RestTemplate();
+
+            ResponseEntity<String> response = rest.getForEntity(url, String.class);
+
             sitter.setSitterUUID(UUID.randomUUID());
+            sitter.setScheduleId(response.getBody());
             sitterRepo.save(sitter);
         } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already registered");
