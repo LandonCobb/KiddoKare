@@ -6,7 +6,7 @@ import Login from "../pages/Login";
 
 const Tab = createBottomTabNavigator();
 
-const MainNav = () => {
+const TestingNav = () => {
     return (
         <Tab.Navigator>
             <Tab.Screen name="Parent Profile" component={ParentSignUp} />
@@ -16,4 +16,4 @@ const MainNav = () => {
     );
 };
 
-export default MainNav;
+export default TestingNav;
