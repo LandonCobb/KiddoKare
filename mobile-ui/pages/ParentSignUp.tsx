@@ -4,7 +4,7 @@ const ParentSignUp = () => {
     const styles = StyleSheet.create({
         FormContainer: {
             flex: 1,
-            justifyContent: "center",
+            justifyContent: "space-evenly",
             alignItems: "center",
             backgroundColor: "#212121",
         },
@@ -13,12 +13,12 @@ const ParentSignUp = () => {
             justifyContent: "center",
             alignItems: "stretch",
             borderRadius: 5,
-            paddingTop: "1.5%",
-            paddingBottom: "1.5%",
-            paddingRight: "3%",
-            paddingLeft: "3%",
-            marginTop: "0.5%",
-            marginBottom: "0.5%",
+            // paddingTop: "1.5%",
+            // paddingBottom: "1.5%",
+            // paddingRight: "3%",
+            // paddingLeft: "3%",
+            // marginTop: "0.5%",
+            // marginBottom: "0.5%",
             width: "75%",
         },
 
@@ -26,21 +26,20 @@ const ParentSignUp = () => {
             flexDirection: "row",
         },
 
-        ButtonContainer: {
-            paddingTop: "3%",
-        },
+        // ButtonContainer: {
+        //     paddingTop: "3%",
+        // },
 
         SignUpHeader: {
-            padding: "3%",
+            // padding: "3%",
             fontSize: 48,
             fontWeight: "300",
             color: "#ffffff",
         },
 
         Text: {
-            marginTop: "3%",
+            // marginTop: "3%",
             marginBottom: "0.5%",
-            marginRight: "3%",
             fontSize: 20,
             fontWeight: "500",
             color: "#a0a0a0",
@@ -49,17 +48,19 @@ const ParentSignUp = () => {
         TextInput: {
             alignItems: "stretch",
             borderRadius: 5,
-            paddingTop: "3%",
-            paddingBottom: "3%",
-            paddingLeft: "3%",
-            paddingRight: "3%",
-            marginTop: "1.5%",
-            marginBottom: "1.5%",
+            padding: "3%",
+            // paddingTop: "3%",
+            // paddingBottom: "3%",
+            // paddingLeft: "3%",
+            // paddingRight: "3%",
+            // marginTop: "1.5%",
+            // marginBottom: "1.5%",
             fontSize: 24,
             color: "#ffffff",
             backgroundColor: "#181818",
         },
     });
+    const buttonColor = "#9e00ff";
 
     return (
         <SafeAreaView style={styles.FormContainer}>
@@ -85,9 +86,9 @@ const ParentSignUp = () => {
                 <TextInput style={styles.TextInput}></TextInput>
             </SafeAreaView>
 
-            <SafeAreaView style={styles.ButtonContainer}>
-                <Button title="Sign Up"></Button>
-            </SafeAreaView>
+            {/* <SafeAreaView style={styles.ButtonContainer}>
+            </SafeAreaView> */}
+            <Button title="Sign Up" color={buttonColor}></Button>
         </SafeAreaView>
     );
 };
