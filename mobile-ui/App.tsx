@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import MainNav from "./nav/MainNav";
+import TestingNav from "./nav/TestingNav";
 
 export default function App() {
     return (
         <NavigationContainer>
-            <MainNav />
+            <TestingNav />
         </NavigationContainer>
     );
 }
