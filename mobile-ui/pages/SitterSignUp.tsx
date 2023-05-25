@@ -1,50 +1,80 @@
 import { useState } from "react";
-import { Text, SafeAreaView, Button, TextInput } from "react-native";
+import { StyleSheet, Text, SafeAreaView, Button, TextInput } from "react-native";
 
 const SitterSignUp = () => {
-
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [password, setPassword] = useState("");
 
+    const styles = StyleSheet.create({
+        FormContainer: {
+            flex: 1,
+            justifyContent: "space-evenly",
+            alignItems: "center",
+            backgroundColor: "#212121",
+        },
+
+        TextInputsContainer: {
+            justifyContent: "center",
+            alignItems: "stretch",
+            borderRadius: 5,
+            width: "75%",
+        },
+
+        RowContainer: {
+            flexDirection: "row",
+        },
+
+        SignUpHeader: {
+            fontSize: 48,
+            fontWeight: "300",
+            color: "#ffffff",
+        },
+
+        Text: {
+            marginBottom: "0.5%",
+            fontSize: 20,
+            fontWeight: "500",
+            color: "#a0a0a0",
+        },
+
+        TextInput: {
+            alignItems: "stretch",
+            borderRadius: 5,
+            padding: "3%",
+            fontSize: 24,
+            color: "#ffffff",
+            backgroundColor: "#181818",
+        },
+    });
+    const buttonColor = "#9e00ff";
+
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.FormContainer}>
+            <Text style={styles.SignUpHeader}>Sign Up</Text>
 
-            <Text>Sign UP</Text>
+            <SafeAreaView style={styles.TextInputsContainer}>
+                <Text style={styles.Text}>Email:</Text>
+                <TextInput style={styles.TextInput} onChangeText={setEmail} value={email} />
+            </SafeAreaView>
 
-            <Text>Email</Text>
+            <SafeAreaView style={styles.TextInputsContainer}>
+                <Text style={styles.Text}>Name:</Text>
+                <TextInput style={styles.TextInput} onChangeText={setName} value={name} />
+            </SafeAreaView>
 
-            <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={setEmail}
-        value={email}
-    />
-            <Text>Name</Text>
+            <SafeAreaView style={styles.TextInputsContainer}>
+                <Text style={styles.Text}>Address:</Text>
+                <TextInput style={styles.TextInput} onChangeText={setAddress} value={address} />
+            </SafeAreaView>
 
-            <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={setName}
-        value={name}
-    />
+            <SafeAreaView style={styles.TextInputsContainer}>
+                <Text style={styles.Text}>Password:</Text>
+                <TextInput style={styles.TextInput} onChangeText={setPassword} value={password} />
+            </SafeAreaView>
 
-            <Text>address</Text>
-
-            <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={setAddress}
-        value={address}
-    />
-
-            <Text>Password</Text>
-
-            <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={setPassword}
-        value={password}
-    />
-            <Button title="Sign Up"></Button>
-
+            <Button title="Sign Up" color={buttonColor}></Button>
         </SafeAreaView>
     );
 };
