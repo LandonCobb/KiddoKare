@@ -2,6 +2,7 @@ import { StyleSheet, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ParentSignUp from "../pages/ParentSignUp";
 import ParentProfile from "../pages/ParentProfile";
+import ParentOrSitter from "../pages/ParentOrSitter";
 
 import SitterSignUp from "../pages/SitterSignUp";
 import SitterProfile from "../pages/SitterProfile";
@@ -49,6 +50,8 @@ const TestingNav = () => {
             <Tab.Screen name="Sitter Profile" component={SitterProfile} />
 
             <Tab.Screen name="Login" component={Login} />
+
+            <Tab.Screen name="ParentOrSitter" component={ParentOrSitter}/>
         </Tab.Navigator>
     );
 };

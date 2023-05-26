@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {SafeAreaView, Text, TextInput, View, StyleSheet} from "react-native";
+import {SafeAreaView, Text, TextInput, View, StyleSheet, Button} from "react-native";
 
 
 import {Sitter} from "../types/Sitter";
@@ -30,7 +30,8 @@ const SitterProfile = () => {
         },
 
         ButtonContainer: {
-            marginHorizontal: "3%",
+            marginLeft: "5%",
+            marginTop: "5%"
         },
 
         RowContainer: {
@@ -113,6 +114,12 @@ const SitterProfile = () => {
                 <Text style={styles.Text}>Password:</Text>
                 <TextInput style={styles.TextInput} onChangeText={setPassword} value={password} />
             </SafeAreaView>
+
+            <SafeAreaView style={styles.ButtonContainer}>
+            <Button title="Save Changes"  color={buttonColor}></Button>
+            </SafeAreaView>
+
+
         </SafeAreaView>
     );
 };
