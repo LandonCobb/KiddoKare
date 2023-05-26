@@ -14,9 +14,9 @@ public class JwtFilter implements GatewayFilter {
         JwtUtil jwtUtil = new JwtUtil(token);
 
         if (jwtUtil.isValid()) {
-            // adds the username as a header to the service
+            // adds the username as a header to the service      hopefully
             return chain.filter(exchange.mutate().request(
-                    exchange.getRequest().mutate().header("X-Username", jwtUtil.getBody().getSubject()).build()
+                    exchange.getRequest().mutate().header("X-Email", jwtUtil.getBody().getSubject()).build()
             ).build());
         } else {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);

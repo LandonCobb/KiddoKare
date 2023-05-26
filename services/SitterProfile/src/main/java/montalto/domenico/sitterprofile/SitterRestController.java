@@ -39,7 +39,7 @@ public class SitterRestController {
 
     //Post
     //localhost:8081/sitter  (YOU NEED A BODY WITH A SITTER OBJ)
-    @PostMapping(path = "")
+    @PostMapping(path = "/signup")
     @ResponseStatus(HttpStatus.CREATED)
     public void createSitter(@RequestBody Sitter sitter) {
 
@@ -47,22 +47,22 @@ public class SitterRestController {
 
         if (sitterAlreadyExisting == null){
 
-            String host;
-
-            if(System.getenv().containsKey("GATEWAY_SERVICE")){
-                host = System.getenv("GATEWAY_SERVICE");
-            } else {
-                host = "localhost";
-            }
-
-            String url = "http://" + host + ":8080/schedule";
-
-            RestTemplate rest = new RestTemplate();
-
-            ResponseEntity<String> response = rest.getForEntity(url, String.class);
+//            String host;
+//
+//            if(System.getenv().containsKey("GATEWAY_SERVICE")){
+//                host = System.getenv("GATEWAY_SERVICE");
+//            } else {
+//                host = "localhost";
+//            }
+//
+//            String url = "http://" + host + ":8080/schedule";
+//
+//            RestTemplate rest = new RestTemplate();
+//
+//            ResponseEntity<String> response = rest.getForEntity(url, String.class);
 
             sitter.setSitterUUID(UUID.randomUUID());
-            sitter.setScheduleId(response.getBody());
+//            sitter.setScheduleId(response.getBody());
             sitterRepo.save(sitter);
         } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already registered");

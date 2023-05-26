@@ -17,7 +17,7 @@ public class ParentRestController {
     private ParentRepository parentRepo;
 
     // Create
-    @PostMapping("")
+    @PostMapping("/signup")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void createParentProfile(@RequestBody Parent parent) {
         if (parentRepo.existsByEmailContaining(parent.getEmail())) {
