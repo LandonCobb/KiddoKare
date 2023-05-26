@@ -42,6 +42,49 @@ export default [
     ],
   },
   {
+    url: "schedule/parent/:pId",
+    action: nsr.HTTPAction.GET, //GETS ALL RESERVED BLOCKS BY PARENT ID
+    handlers: [
+      async (req, res) => {
+        try {
+          ScheduleModel.aggregate([
+            {
+              $match: {
+                'blocks.bookedParentId': { $ne: null }
+              }
+            },
+            {
+              $unwind: '$blocks'
+            },
+            {
+              $match: {
+                'blocks.bookedParentId': { $ne: null }
+              }
+            },
+            {
+              $group: {
+                _id: null,
+                matchingBlocks: { $push: '$blocks' }
+              }
+            }
+          ])
+            .exec((err, result) => {
+              if (err) {
+                // Handle error
+                console.error(err);
+                return res.status(404).json(null);
+              } else {
+                const matchingBlocks = result.length > 0 ? result[0].matchingBlocks : [];
+                return res.status(200).json(matchingBlocks);
+              }
+            }); 
+        } catch {
+          return res.status(404).json(null);
+        }
+      },
+    ],
+  },
+  {
     url: "schedule",
     action: nsr.HTTPAction.POST, //CREATE EMPY SCHEDULE
     handlers: [

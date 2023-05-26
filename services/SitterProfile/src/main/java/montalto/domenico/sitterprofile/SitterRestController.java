@@ -9,83 +9,80 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
-
 //change the port number with the port of our frontend
 //@CrossOrigin("http://localhost:8090")
 @RestController
 @RequestMapping("/sitter")
 public class SitterRestController {
 
-
-    //this is an instance of the mongoDB
+    // this is an instance of the mongoDB
     @Autowired
     private SitterRepository sitterRepo;
 
-    //GET
-    //localhost:8081/sitter
+    // GET
+    // localhost:8081/sitter
     @GetMapping(path = "")
     @ResponseStatus(code = HttpStatus.OK)
     public List<Sitter> findAllSitters() {
         return sitterRepo.findAll();
     }
 
-    //GET
-    //localhost:8081/sitter/search/byEmail/ (YOU NEED AN email as a Header)
+    // GET
+    // localhost:8081/sitter/search/byEmail/ (YOU NEED AN email as a Header)
     @GetMapping(path = "/search/byEmail")
     @ResponseStatus(code = HttpStatus.OK)
-    public Sitter searchSitterByEmail(@RequestHeader("X-Email") String email){
+    public Sitter searchSitterByEmail(@RequestHeader("X-Email") String email) {
         return sitterRepo.findByEmailContaining(email);
     }
 
-    //Post
-    //localhost:8081/sitter  (YOU NEED A BODY WITH A SITTER OBJ)
-    @PostMapping(path = "")
+    // Post
+    // localhost:8081/sitter (YOU NEED A BODY WITH A SITTER OBJ)
+    @PostMapping(path = "/signup")
     @ResponseStatus(HttpStatus.CREATED)
     public void createSitter(@RequestBody Sitter sitter) {
 
         Sitter sitterAlreadyExisting = sitterRepo.findByEmailContaining(sitter.getEmail());
 
-        if (sitterAlreadyExisting == null){
-//
-//            String host;
-//
-//            if(System.getenv().containsKey("GATEWAY_SERVICE")){
-//                host = System.getenv("GATEWAY_SERVICE");
-//            } else {
-//                host = "localhost";
-//            }
-//
-//            String url = "http://" + host + ":8080/schedule";
-//
-//            RestTemplate rest = new RestTemplate();
-//
-//            ResponseEntity<String> response = rest.getForEntity(url, String.class);
+        if (sitterAlreadyExisting == null) {
+            // String host;
+            //
+            // if(System.getenv().containsKey("GATEWAY_SERVICE")){
+            // host = System.getenv("GATEWAY_SERVICE");
+            // } else {
+            // host = "localhost";
+            // }
+            //
+            // String url = "http://" + host + ":8080/schedule";
+            //
+            // RestTemplate rest = new RestTemplate();
+            //
+            // ResponseEntity<String> response = rest.getForEntity(url, String.class);
 
             sitter.setSitterUUID(UUID.randomUUID());
-            //sitter.setScheduleId(response.getBody());
+            // sitter.setScheduleId(response.getBody());
             sitterRepo.save(sitter);
         } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already registered");
         }
     }
 
-    //Post
-    //localhost:8081/sitter/addSitters (YOU NEED A BODY WITH A LIST OF SITTER OBJS)
+    // Post
+    // localhost:8081/sitter/addSitters (YOU NEED A BODY WITH A LIST OF SITTER OBJS)
 
     @PostMapping(path = "/addSitters")
     @ResponseStatus(HttpStatus.CREATED)
     public void createSitters(@RequestBody List<Sitter> sitters) {
-        for(Sitter sitter : sitters) {
+        for (Sitter sitter : sitters) {
             createSitter(sitter);
         }
     }
 
-    //Put
-    //localhost:8081/sitter
+    // Put
+    // localhost:8081/sitter
 
     @PutMapping(path = "")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateSitter(@RequestHeader("X-Email") String email, @RequestBody Sitter sitter){
+    public void updateSitter(@RequestHeader("X-Email") String email, @RequestBody Sitter sitter) {
 
         Sitter oldSitter = sitterRepo.findByEmailContaining(email);
 
@@ -98,21 +95,21 @@ public class SitterRestController {
         if (sitter.getName() != null) {
             oldSitter.setName(sitter.getName());
         }
-        if(sitter.getAddress() != null) {
+        if (sitter.getAddress() != null) {
             oldSitter.setAddress(sitter.getAddress());
         }
-        if(sitter.getBio() != null) {
+        if (sitter.getBio() != null) {
             oldSitter.setBio(sitter.getBio());
         }
         sitterRepo.save(oldSitter);
     }
 
-    //Delete
-    //localhost:8081/sitter
+    // Delete
+    // localhost:8081/sitter
 
     @DeleteMapping("")
     @ResponseStatus(code = HttpStatus.OK)
-    public void deleteSitter(@RequestHeader("X-Email") String email){
+    public void deleteSitter(@RequestHeader("X-Email") String email) {
         sitterRepo.deleteByEmail(email);
     }
 }
