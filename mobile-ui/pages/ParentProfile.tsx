@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, SafeAreaView, Text, TextInput } from "react-native";
+import { StyleSheet, SafeAreaView, Text, TextInput, Button } from "react-native";
 import { Parent } from "../types/Parent";
 
 const ParentProfile = () => {
@@ -27,7 +27,8 @@ const ParentProfile = () => {
         },
 
         ButtonContainer: {
-            marginHorizontal: "3%",
+            marginLeft: "5%",
+            marginTop: "5%",
         },
 
         RowContainer: {
@@ -109,6 +110,10 @@ const ParentProfile = () => {
             <SafeAreaView style={styles.TextInputsContainer}>
                 <Text style={styles.Text}>Password:</Text>
                 <TextInput style={styles.TextInput} onChangeText={setPassword} value={password} />
+            </SafeAreaView>
+
+            <SafeAreaView style={styles.ButtonContainer}>
+                <Button title="Save Changes" color={buttonColor}></Button>
             </SafeAreaView>
         </SafeAreaView>
     );
