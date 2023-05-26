@@ -26,7 +26,7 @@ const SitterSignUp = () => {
             flexDirection: "row",
         },
 
-        SignUpHeader: {
+        TextHeader: {
             fontSize: 48,
             fontWeight: "300",
             color: "#ffffff",
@@ -52,7 +52,7 @@ const SitterSignUp = () => {
 
     return (
         <SafeAreaView style={styles.FormContainer}>
-            <Text style={styles.SignUpHeader}>Sign Up</Text>
+            <Text style={styles.TextHeader}>Sign Up</Text>
 
             <SafeAreaView style={styles.TextInputsContainer}>
                 <Text style={styles.Text}>Email:</Text>

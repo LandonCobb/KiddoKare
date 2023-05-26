@@ -1,61 +1,116 @@
-import { useState } from "react";
-import {SafeAreaView, Text, TextInput} from "react-native";
+import { useEffect, useState } from "react";
+import { StyleSheet, SafeAreaView, Text, TextInput } from "react-native";
+import { Parent } from "../types/Parent";
 
 const ParentProfile = () => {
-
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [password, setPassword] = useState("");
     const [bio, setBio] = useState("");
 
+    const styles = StyleSheet.create({
+        FormContainer: {
+            flex: 1,
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            backgroundColor: "#212121",
+        },
 
+        TextInputsContainer: {
+            justifyContent: "center",
+            alignItems: "stretch",
+            borderRadius: 5,
+            marginLeft: "5%",
+            marginTop: "5%",
+            width: "75%",
+        },
 
+        ButtonContainer: {
+            marginHorizontal: "3%",
+        },
+
+        RowContainer: {
+            flexDirection: "row",
+        },
+
+        TextHeader: {
+            fontSize: 48,
+            fontWeight: "300",
+            color: "#ffffff",
+        },
+
+        Text: {
+            marginBottom: "0.5%",
+            fontSize: 20,
+            fontWeight: "500",
+            color: "#a0a0a0",
+        },
+
+        TextInput: {
+            alignItems: "stretch",
+            borderRadius: 5,
+            padding: "3%",
+            fontSize: 24,
+            color: "#ffffff",
+            backgroundColor: "#181818",
+        },
+    });
+    const buttonColor = "#9e00ff";
+
+    const [parent, setParent] = useState<Parent | undefined>();
+
+    useEffect(() => {
+        fetch("http://192.168.50.24:8080/parent/byEmail", {
+            headers: {
+                "X-Email": "coward@gmail.com",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setParent(data);
+            });
+    }, []);
+
+    useEffect(() => {
+        if (parent) {
+            setName(parent.name);
+            setAddress(parent.address);
+            if (parent.bio) {
+                setBio(parent.bio);
+            }
+
+            setEmail(parent.email);
+        }
+    }, [parent]);
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.FormContainer}>
+            <SafeAreaView style={styles.TextInputsContainer}>
+                <Text style={styles.Text}>Name:</Text>
+                <TextInput style={styles.TextInput} onChangeText={setName} value={name} />
+            </SafeAreaView>
 
-        <Text>Name</Text>
+            <SafeAreaView style={styles.TextInputsContainer}>
+                <Text style={styles.Text}>Bio:</Text>
+                <TextInput style={styles.TextInput} onChangeText={setBio} value={bio} />
+            </SafeAreaView>
 
-        <TextInput
-        style={{height:40, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={setName}
-        value={name}
-        />
+            <SafeAreaView style={styles.TextInputsContainer}>
+                <Text style={styles.Text}>Address:</Text>
+                <TextInput style={styles.TextInput} onChangeText={setAddress} value={address} />
+            </SafeAreaView>
 
-        <Text>Bio</Text>
+            <SafeAreaView style={styles.TextInputsContainer}>
+                <Text style={styles.Text}>Email:</Text>
+                <TextInput style={styles.TextInput} onChangeText={setEmail} value={email} />
+            </SafeAreaView>
 
-        <TextInput
-        style={{height:40, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={setBio}
-        value={bio}
-        />
-
-        <Text>Address</Text>
-
-        <TextInput
-        style={{height:40, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={setAddress}
-        value={address}
-        />
-
-        <Text>Email</Text>
-        
-        <TextInput
-        style={{height:40, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={setEmail}
-        value={email}
-        />
-
-
-        <Text>Password</Text>
-
-        <TextInput
-        style={{height:40, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={setPassword}
-        value={password}
-        />
-    </SafeAreaView>
+            <SafeAreaView style={styles.TextInputsContainer}>
+                <Text style={styles.Text}>Password:</Text>
+                <TextInput style={styles.TextInput} onChangeText={setPassword} value={password} />
+            </SafeAreaView>
+        </SafeAreaView>
     );
 };
 
