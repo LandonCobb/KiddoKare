@@ -30,7 +30,7 @@ const ParentSignUp = () => {
         //     paddingTop: "3%",
         // },
 
-        SignUpHeader: {
+        TextHeader: {
             // padding: "3%",
             fontSize: 48,
             fontWeight: "300",
@@ -64,7 +64,7 @@ const ParentSignUp = () => {
 
     return (
         <SafeAreaView style={styles.FormContainer}>
-            <Text style={styles.SignUpHeader}>Sign Up</Text>
+            <Text style={styles.TextHeader}>Sign Up</Text>
 
             <SafeAreaView style={styles.TextInputsContainer}>
                 <Text style={styles.Text}>Email:</Text>

@@ -1,14 +1,30 @@
 import * as nsr from "node-server-router";
 import { ScheduleModel } from "../models/schedule.js";
+import { Kafka } from "kafkajs";
 import _uuid from "uuid";
 const { v4: uuid } = _uuid;
 
-const validateNewBooking = (newStartHour, newEndHour, existingBookings, startHour, endHour) => {
+const validateNewBooking = (
+  newStartHour,
+  newEndHour,
+  existingBookings,
+  startHour,
+  endHour
+) => {
   for (const booking of existingBookings)
-    if (booking.startHour < newEndHour && booking.endHour > newStartHour) return false;
-  if (newStartHour >= startHour && newEndHour <= endHour) return true
+    if (booking.startHour < newEndHour && booking.endHour > newStartHour)
+      return false;
+  if (newStartHour >= startHour && newEndHour <= endHour) return true;
   return false;
-}
+};
+
+const kafka = new Kafka({
+  clientId: "email-service",
+  brokers: ["broker:9092"],
+});
+const producer = kafka.producer();
+
+
 
 export default [
   {
@@ -26,12 +42,55 @@ export default [
     ],
   },
   {
+    url: "schedule/parent/:pId",
+    action: nsr.HTTPAction.GET, //GETS ALL RESERVED BLOCKS BY PARENT ID
+    handlers: [
+      async (req, res) => {
+        try {
+          ScheduleModel.aggregate([
+            {
+              $match: {
+                'blocks.bookedParentId': { $ne: null }
+              }
+            },
+            {
+              $unwind: '$blocks'
+            },
+            {
+              $match: {
+                'blocks.bookedParentId': { $ne: null }
+              }
+            },
+            {
+              $group: {
+                _id: null,
+                matchingBlocks: { $push: '$blocks' }
+              }
+            }
+          ])
+            .exec((err, result) => {
+              if (err) {
+                // Handle error
+                console.error(err);
+                return res.status(404).json(null);
+              } else {
+                const matchingBlocks = result.length > 0 ? result[0].matchingBlocks : [];
+                return res.status(200).json(matchingBlocks);
+              }
+            }); 
+        } catch {
+          return res.status(404).json(null);
+        }
+      },
+    ],
+  },
+  {
     url: "schedule",
     action: nsr.HTTPAction.POST, //CREATE EMPY SCHEDULE
     handlers: [
       async (req, res) => {
         try {
-          const schedule = await ScheduleModel.create({});
+          const schedule = await ScheduleModel.create({sitterEmail: req.headers["X-Email"]});
           return res.status(201).send(schedule._id.toString());
         } catch {
           return res.sendStatus(400);
@@ -123,8 +182,9 @@ export default [
     handlers: [
       async (req, res) => {
         try {
-          const newBlock = { ...req.body, blockId: uuid() }
-          if (!newBlock.dateBooked || !newBlock.bookedParentId) return res.status(400).json({message: "Missing data"})
+          const newBlock = { ...req.body, blockId: uuid() };
+          if (!newBlock.dateBooked || !newBlock.bookedParentId)
+            return res.status(400).json({ message: "Missing data" });
           const schedule = await ScheduleModel.findById({
             _id: req.params._id,
           });
@@ -136,26 +196,65 @@ export default [
           const defualtBlock = blocksInQuestion.find(
             (x) => x.dateBooked === null && x.bookedParentId === null
           );
-          if (!defualtBlock) return res.status(400).json({message: "Defualt availability does not exist"})
-          const scheduledBlocks = blocksInQuestion.filter((x) => x.blockId !== defualtBlock.blockId)
+          if (!defualtBlock)
+            return res
+              .status(400)
+              .json({ message: "Defualt availability does not exist" });
+          const scheduledBlocks = blocksInQuestion.filter(
+            (x) => x.blockId !== defualtBlock.blockId
+          );
           if (!scheduledBlocks.length) {
-            if (newBlock.startHour >= defualtBlock.startHour && newBlock.endHour <= defualtBlock.endHour) {
+            if (
+              newBlock.startHour >= defualtBlock.startHour &&
+              newBlock.endHour <= defualtBlock.endHour
+            ) {
               const firstItemOnSchedule = await ScheduleModel.findByIdAndUpdate(
                 { _id: req.params._id },
                 { $push: { blocks: newBlock } },
                 { runValidators: true, new: true, upsert: false }
-              )
-              return res.status(200).json(firstItemOnSchedule)
-            } else return res.status(400).json({message: "Not a valid time range"})
-          } else if (validateNewBooking(newBlock.startHour, newBlock.endHour, scheduledBlocks, defualtBlock.startHour, defualtBlock.endHour)) {
+              );
+              //TODO: Send email
+              const emailObject = {
+                "reciever": schedule.sitterEmail,
+                "subject": "Time Reserved",
+                "body": `Check your schedule! A new time has been reserved at ${newBlock.startHour} on ${newBlock.dateBooked}`
+
+              }
+              await producer.connect();
+              await producer.send({
+                topic: "email",
+                messages: [{ value: JSON.stringify(emailObject) }],
+              });
+              return res.status(200).json(firstItemOnSchedule);
+            } else
+              return res
+                .status(400)
+                .json({ message: "Not a valid time range" });
+          } else if (
+            validateNewBooking(
+              newBlock.startHour,
+              newBlock.endHour,
+              scheduledBlocks,
+              defualtBlock.startHour,
+              defualtBlock.endHour
+            )
+          ) {
             const updatedSchedule = await ScheduleModel.findByIdAndUpdate(
               { _id: req.params._id },
               { $push: { blocks: newBlock } },
               { runValidators: true, new: true, upsert: false }
             );
-            return res.status(200).json(updatedSchedule) 
+            // TODO: Send email
+            await producer.connect();
+            await producer.send({
+              topic: "email",
+              messages: [{ value: JSON.stringify(emailObject) }],
+            });
+            return res.status(200).json(updatedSchedule);
           }
-          return res.status(201).json({message: "No valid case for new booking"});
+          return res
+            .status(201)
+            .json({ message: "No valid case for new booking" });
         } catch {
           return res.sendStatus(400);
         }
