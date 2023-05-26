@@ -46,23 +46,23 @@ public class SitterRestController {
         Sitter sitterAlreadyExisting = sitterRepo.findByEmailContaining(sitter.getEmail());
 
         if (sitterAlreadyExisting == null){
-
-            String host;
-
-            if(System.getenv().containsKey("GATEWAY_SERVICE")){
-                host = System.getenv("GATEWAY_SERVICE");
-            } else {
-                host = "localhost";
-            }
-
-            String url = "http://" + host + ":8080/schedule";
-
-            RestTemplate rest = new RestTemplate();
-
-            ResponseEntity<String> response = rest.getForEntity(url, String.class);
+//
+//            String host;
+//
+//            if(System.getenv().containsKey("GATEWAY_SERVICE")){
+//                host = System.getenv("GATEWAY_SERVICE");
+//            } else {
+//                host = "localhost";
+//            }
+//
+//            String url = "http://" + host + ":8080/schedule";
+//
+//            RestTemplate rest = new RestTemplate();
+//
+//            ResponseEntity<String> response = rest.getForEntity(url, String.class);
 
             sitter.setSitterUUID(UUID.randomUUID());
-            sitter.setScheduleId(response.getBody());
+            //sitter.setScheduleId(response.getBody());
             sitterRepo.save(sitter);
         } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already registered");
