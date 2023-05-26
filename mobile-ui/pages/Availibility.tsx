@@ -1,4 +1,5 @@
-import { Text, SafeAreaView } from "react-native";
+import { Text, SafeAreaView, StyleSheet } from "react-native";
+import { DatePicker, Checkbox } from "antd-mobile";
 
 const Availability = () => {
 
