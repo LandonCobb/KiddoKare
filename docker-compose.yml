@@ -154,6 +154,8 @@ services:
           memory: 128M
         reservations:
           memory: 64M
+    volumes:
+      - ${HOST_PATH}\data://data/db
     ports:
       - "8989:27017"
     networks:

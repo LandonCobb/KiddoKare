@@ -1,8 +1,7 @@
 import * as nsr from "node-server-router";
 import { ScheduleModel } from "../models/schedule.js";
 import { Kafka } from "kafkajs";
-import _uuid from "uuid";
-const { v4: uuid } = _uuid;
+import { v4 as uuid } from "uuid";
 
 const validateNewBooking = (
   newStartHour,
@@ -86,14 +85,15 @@ export default [
   },
   {
     url: "schedule",
-    action: nsr.HTTPAction.POST, //CREATE EMPY SCHEDULE
+    action: nsr.HTTPAction.POST, //CREATE EMPTY SCHEDULE
     handlers: [
       async (req, res) => {
         try {
-          const schedule = await ScheduleModel.create({sitterEmail: req.headers["X-Email"]});
+          console.log(req.headers)
+          const schedule = await ScheduleModel.create({sitterEmail: req.headers["x-email"]});
           return res.status(201).send(schedule._id.toString());
         } catch {
-          return res.sendStatus(400);
+          return res.sendStatus(500);
         }
       },
     ],
