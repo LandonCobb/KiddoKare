@@ -19,7 +19,6 @@ app.use(urlencoded({ limit: "50mb", extended: true }));
 app.use(json({ limit: "50mb", extended: true }));
 app.use(cors());
 app.options("*", cors());
-nsr.RouteFactory.applyRoutesTo(app, { log_configured: true });
 connectToDB().catch(connectToDB);
 mongoose.connection.on("connected", () => {
   console.log(`[${process.pid}] Connected to MongoDB`);
@@ -27,6 +26,7 @@ mongoose.connection.on("connected", () => {
 });
 mongoose.connection.on("error", (e) => console.log(`[${process.pid}] ${e}`));
 Eurika.registerWithEureka("schedule", 1000);
+nsr.RouteFactory.applyRoutesTo(app, { log_configured: true });
 app.use((req, _, next) => {
   console.log(`[${process.pid}] ${req.method} ${req.url}`);
   next();
