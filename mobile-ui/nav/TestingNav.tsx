@@ -7,6 +7,8 @@ import ParentOrSitter from "../pages/ParentOrSitter";
 import SitterSignUp from "../pages/SitterSignUp";
 import SitterProfile from "../pages/SitterProfile";
 
+import Availability from "../pages/Availibility";
+
 import Login from "../pages/Login";
 
 const styles = StyleSheet.create({
@@ -51,7 +53,9 @@ const TestingNav = () => {
 
             <Tab.Screen name="Login" component={Login} />
 
-            <Tab.Screen name="ParentOrSitter" component={ParentOrSitter}/>
+            <Tab.Screen name="ParentOrSitter" component={ParentOrSitter} />
+
+            <Tab.Screen name="Availability" component={Availability} />
         </Tab.Navigator>
     );
 };
