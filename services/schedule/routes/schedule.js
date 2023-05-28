@@ -89,7 +89,6 @@ export default [
     handlers: [
       async (req, res) => {
         try {
-          console.log(req.headers)
           const schedule = await ScheduleModel.create({sitterEmail: req.headers["x-email"]});
           return res.status(201).send(schedule._id.toString());
         } catch {
