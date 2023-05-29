@@ -1,9 +1,22 @@
 import { useState } from "react";
-import { StyleSheet, Text, SafeAreaView, View } from "react-native";
+import { StyleSheet, Text, Button, ScrollView, SafeAreaView, View } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 
 const Availability = () => {
-    const [selected, setSelected] = useState("");
+    const [monStart, setMonStart] = useState("");
+    const [monEnd, setMonEnd] = useState("");
+    const [tueStart, setTueStart] = useState("");
+    const [tueEnd, setTueEnd] = useState("");
+    const [wedStart, setWedStart] = useState("");
+    const [wedEnd, setWedEnd] = useState("");
+    const [thurStart, setThurStart] = useState("");
+    const [thurEnd, setThurEnd] = useState("");
+    const [friStart, setFriStart] = useState("");
+    const [friEnd, setFriEnd] = useState("");
+    const [satStart, setSatStart] = useState("");
+    const [satEnd, setSatEnd] = useState("");
+    const [sunStart, setSunStart] = useState("");
+    const [sunEnd, setSunEnd] = useState("");
 
     const data = [
         { key: "1", value: "1" },
@@ -23,8 +36,8 @@ const Availability = () => {
     const styles = StyleSheet.create({
         FormContainer: {
             flex: 1,
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
+            justifyContent: "center",
+            alignItems: "center",
             backgroundColor: "#212121",
         },
 
@@ -42,6 +55,10 @@ const Availability = () => {
             marginTop: "5%",
         },
 
+        ListContainer: {
+            height: "35%",
+        },
+
         RowContainer: {
             flexDirection: "row",
         },
@@ -50,6 +67,13 @@ const Availability = () => {
             fontSize: 48,
             fontWeight: "300",
             color: "#ffffff",
+        },
+
+        TextHeader2: {
+            margin: "3%",
+            fontSize: 32,
+            fontWeight: "400",
+            color: "#a0a0a0",
         },
 
         Text: {
@@ -67,6 +91,23 @@ const Availability = () => {
             color: "#ffffff",
             backgroundColor: "#181818",
         },
+
+        Box: {
+            marginHorizontal: 5,
+            borderColor: "#a0a0a0",
+        },
+
+        DropDown: {
+            borderWidth: 0,
+        },
+
+        DropDownText: {
+            color: "#ffffff",
+        },
+
+        Input: {
+            color: "#ffffff",
+        },
     });
     const buttonColor = "#9e00ff";
 
@@ -76,51 +117,143 @@ const Availability = () => {
 
             {/* Change 'setSelected' variables */}
             {/* Start times */}
-            <View>
-                {/* Monday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select Start Hour" />
-
-                {/* Tuesday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select Start Hour" />
-
-                {/* Wednesday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select Start Hour" />
-
-                {/* Thursday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select Start Hour" />
-
-                {/* Friday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select Start Hour" />
-
-                {/* Saturday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select Start Hour" />
-
-                {/* Sunday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select Start Hour" />
+            <Text style={styles.TextHeader2}>Select Start Times:</Text>
+            <View style={styles.ListContainer}>
+                <ScrollView horizontal={true} style={styles.RowContainer}>
+                    <SelectList
+                        data={data}
+                        setSelected={setMonStart}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Monday"
+                    />
+                    <SelectList
+                        data={data}
+                        setSelected={setTueStart}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Tuesday"
+                    />
+                    <SelectList
+                        data={data}
+                        setSelected={setWedStart}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Wednesday"
+                    />
+                    <SelectList
+                        data={data}
+                        setSelected={setThurStart}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Thursday"
+                    />
+                    <SelectList
+                        data={data}
+                        setSelected={setFriStart}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Friday"
+                    />
+                    <SelectList
+                        data={data}
+                        setSelected={setSatStart}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Saturday"
+                    />
+                    <SelectList
+                        data={data}
+                        setSelected={setSunStart}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Sunday"
+                    />
+                </ScrollView>
             </View>
 
             {/* End times */}
-            <View>
-                {/* Monday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select End Hour" />
-
-                {/* Tuesday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select End Hour" />
-
-                {/* Wednesday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select End Hour" />
-
-                {/* Thursday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select End Hour" />
-
-                {/* Friday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select End Hour" />
-
-                {/* Saturday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select End Hour" />
-
-                {/* Sunday */}
-                <SelectList data={data} setSelected={setSelected} placeholder="Select End Hour" />
+            <Text style={styles.TextHeader2}>Select End Times:</Text>
+            <View style={styles.ListContainer}>
+                <ScrollView horizontal={true} style={styles.RowContainer}>
+                    <SelectList
+                        data={data}
+                        setSelected={setMonEnd}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Monday"
+                    />
+                    <SelectList
+                        data={data}
+                        setSelected={setTueEnd}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Tuesday"
+                    />
+                    <SelectList
+                        data={data}
+                        setSelected={setWedEnd}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Wednesday"
+                    />
+                    <SelectList
+                        data={data}
+                        setSelected={setThurEnd}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Thursday"
+                    />
+                    <SelectList
+                        data={data}
+                        setSelected={setFriEnd}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Friday"
+                    />
+                    <SelectList
+                        data={data}
+                        setSelected={setSatEnd}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Saturday"
+                    />
+                    <SelectList
+                        data={data}
+                        setSelected={setSunEnd}
+                        boxStyles={styles.Box}
+                        dropdownTextStyles={styles.DropDownText}
+                        dropdownStyles={styles.DropDown}
+                        inputStyles={styles.Input}
+                        placeholder="Sunday"
+                    />
+                </ScrollView>
             </View>
         </SafeAreaView>
     );
