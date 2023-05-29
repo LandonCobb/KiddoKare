@@ -98,7 +98,7 @@ export default [
     ],
   },
   {
-    url: "schedule/defaults",
+    url: "schedule/defaults/:_id",
     action: nsr.HTTPAction.PUT, //USED TO ADD THE DEFAULT TIME BLOCKS (SITTER ADDS THESE)
     handlers: [
       async (req, res) => {
@@ -121,14 +121,15 @@ export default [
             { runValidators: true, new: true, upsert: false }
           );
           return res.status(201).json(schedule);
-        } catch {
+        } catch  (err) {
+          console.log(err)
           return res.sendStatus(400);
         }
       },
     ],
   },
   {
-    url: "schedule/default",
+    url: "schedule/default/:_id/:blockId",
     action: nsr.HTTPAction.PATCH, //USED TO UPDATE A SPECIFIC DEFAULT TIME BLOCK (SITTER DOES THIS)
     handlers: [
       async (req, res) => {
@@ -139,18 +140,21 @@ export default [
           //   "endHour": 8,
           //   "dayOfWeek": "Monday"
           // }
-          const newBlock = {
-            ...res.body,
-            blockId: uuid(),
-            dateBooked: null,
-            bookedParentId: null,
-          };
-          const schedule = await ScheduleModel.findByIdAndUpdate(
+          const schedule = await ScheduleModel.findById(req.params._id).lean()
+          const oldBlock = schedule.blocks.find(x => x.blockId === req.params.blockId)
+          if(!oldBlock) return res.status(404).json({message: "couldnt find block to update"})
+          const updatedBlock = {
+            ...({...oldBlock, _id: oldBlock._id.toString()}),
+            ...req.body
+          }
+          console.log(updatedBlock);
+          const updatedBlocks = [...schedule.blocks.filter(x => x.blockId !== req.params.blockId), updatedBlock]
+          const newSchedule = await ScheduleModel.findByIdAndUpdate(
             { _id: req.params._id },
-            { $push: { blocks: newBlock } },
+            { $set: { blocks: updatedBlocks } },
             { runValidators: true, new: true, upsert: false }
           );
-          return res.status(201).json(schedule);
+          return res.status(200).json(newSchedule);
         } catch {
           return res.sendStatus(400);
         }
@@ -190,7 +194,7 @@ export default [
           const blocks = schedule.blocks;
           const blocksInQuestion = blocks.filter(
             (x) =>
-              x.dayOfWeek.toUpperCase() === res.body.dayOfWeek.toUpperCase()
+              x.dayOfWeek.toUpperCase() === req.body.dayOfWeek.toUpperCase()
           );
           const defualtBlock = blocksInQuestion.find(
             (x) => x.dateBooked === null && x.bookedParentId === null
@@ -214,7 +218,7 @@ export default [
               );
               //TODO: Send email
               const emailObject = {
-                "reciever": schedule.sitterEmail,
+                "receiver": schedule.sitterEmail,
                 "subject": "Time Reserved",
                 "body": `Check your schedule! A new time has been reserved at ${newBlock.startHour} on ${newBlock.dateBooked}`
 
@@ -244,6 +248,11 @@ export default [
               { runValidators: true, new: true, upsert: false }
             );
             // TODO: Send email
+            const emailObject = {
+              "receiver": schedule.sitterEmail,
+              "subject": "Time Reserved",
+              "body": `Check your schedule! A new time has been reserved at ${newBlock.startHour} on ${newBlock.dateBooked}`
+            }
             await producer.connect();
             await producer.send({
               topic: "email",
@@ -254,8 +263,9 @@ export default [
           return res
             .status(201)
             .json({ message: "No valid case for new booking" });
-        } catch {
-          return res.sendStatus(400);
+        } catch (err){
+          console.log(err)
+          return res.sendStatus(500);
         }
       },
     ],
