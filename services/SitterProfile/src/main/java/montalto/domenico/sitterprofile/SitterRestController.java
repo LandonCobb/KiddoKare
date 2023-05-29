@@ -3,6 +3,7 @@ package montalto.domenico.sitterprofile;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,22 +45,24 @@ public class SitterRestController {
         Sitter sitterAlreadyExisting = sitterRepo.findByEmailContaining(sitter.getEmail());
 
         if (sitterAlreadyExisting == null) {
-            // String host;
-            //
-            // if(System.getenv().containsKey("GATEWAY_SERVICE")){
-            // host = System.getenv("GATEWAY_SERVICE");
-            // } else {
-            // host = "localhost";
-            // }
-            //
-            // String url = "http://" + host + ":8080/schedule";
-            //
-            // RestTemplate rest = new RestTemplate();
-            //
-            // ResponseEntity<String> response = rest.getForEntity(url, String.class);
+            String host;
+
+            if (System.getenv().containsKey("GATEWAY_SERVICE")) {
+                host = System.getenv("GATEWAY_SERVICE");
+            } else {
+                host = "localhost";
+            }
+
+            String url = "http://" + host + ":8080/schedule";
+
+            System.out.println(url);
+
+            RestTemplate rest = new RestTemplate();
+
+            String response = rest.postForObject(url, new HttpEntity<>(""), String.class);
 
             sitter.setSitterUUID(UUID.randomUUID());
-            // sitter.setScheduleId(response.getBody());
+            sitter.setScheduleId(response);
             sitterRepo.save(sitter);
         } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already registered");
