@@ -8,7 +8,7 @@ import Main from "./pages/Main";
 export default function App() {
     return (
         <SecurityProvider>
-            <Main />
+            <TestingNav />
         </SecurityProvider>
     );
 }

@@ -10,6 +10,7 @@ import SitterProfile from "../pages/SitterProfile";
 import Availability from "../pages/Availibility";
 
 import Login from "../pages/Login";
+import { NavigationContainer } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
     TabBar: {
@@ -36,27 +37,31 @@ const Tab = createBottomTabNavigator();
 
 const TestingNav = () => {
     return (
-        <Tab.Navigator
-            screenOptions={{
-                tabBarStyle: styles.TabBar,
-                tabBarLabelStyle: styles.TabLabel,
-                // headerShown: false, // Removes the Header
-                headerStyle: styles.HeaderBar,
-                headerTintColor: "#ffffff", // Header text color
-            }}
-        >
-            <Tab.Screen name="Parent Sign Up" component={ParentSignUp} />
-            <Tab.Screen name="Parent Profile" component={ParentProfile} />
 
-            <Tab.Screen name="Sitter Sign Up" component={SitterSignUp} />
-            <Tab.Screen name="Sitter Profile" component={SitterProfile} />
+        <NavigationContainer>
 
-            <Tab.Screen name="Login" component={Login} />
+            <Tab.Navigator
+                screenOptions={{
+                    tabBarStyle: styles.TabBar,
+                    tabBarLabelStyle: styles.TabLabel,
+                    // headerShown: false, // Removes the Header
+                    headerStyle: styles.HeaderBar,
+                    headerTintColor: "#ffffff", // Header text color
+                }}
+            >
+                <Tab.Screen name="Parent Sign Up" component={ParentSignUp} />
+                <Tab.Screen name="Parent Profile" component={ParentProfile} />
 
-            <Tab.Screen name="ParentOrSitter" component={ParentOrSitter} />
+                <Tab.Screen name="Sitter Sign Up" component={SitterSignUp} />
+                <Tab.Screen name="Sitter Profile" component={SitterProfile} />
 
-            <Tab.Screen name="Availability" component={Availability} />
-        </Tab.Navigator>
+                <Tab.Screen name="Login" component={Login} />
+
+                <Tab.Screen name="ParentOrSitter" component={ParentOrSitter} />
+
+                <Tab.Screen name="Availability" component={Availability} />
+            </Tab.Navigator>
+        </NavigationContainer>
     );
 };
 
