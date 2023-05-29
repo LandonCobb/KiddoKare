@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, SafeAreaView, Text, TextInput } from "react-native";
+import { StyleSheet, SafeAreaView, Text, TextInput, Button } from "react-native";
 import { Parent } from "../types/Parent";
+import ip from "../ip";
 
 const ParentProfile = () => {
     const [email, setEmail] = useState("");
@@ -27,7 +28,8 @@ const ParentProfile = () => {
         },
 
         ButtonContainer: {
-            marginHorizontal: "3%",
+            marginLeft: "5%",
+            marginTop: "5%",
         },
 
         RowContainer: {
@@ -61,7 +63,7 @@ const ParentProfile = () => {
     const [parent, setParent] = useState<Parent | undefined>();
 
     useEffect(() => {
-        fetch("http://192.168.50.24:8080/parent/byEmail", {
+        fetch("http://" + ip + ":8080/parent/byEmail", {
             headers: {
                 "X-Email": "coward@gmail.com",
             },
@@ -109,6 +111,10 @@ const ParentProfile = () => {
             <SafeAreaView style={styles.TextInputsContainer}>
                 <Text style={styles.Text}>Password:</Text>
                 <TextInput style={styles.TextInput} onChangeText={setPassword} value={password} />
+            </SafeAreaView>
+
+            <SafeAreaView style={styles.ButtonContainer}>
+                <Button title="Save Changes" color={buttonColor}></Button>
             </SafeAreaView>
         </SafeAreaView>
     );

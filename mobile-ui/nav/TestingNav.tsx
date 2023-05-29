@@ -53,9 +53,9 @@ const TestingNav = () => {
 
             <Tab.Screen name="Login" component={Login} />
 
-            <Tab.Screen name="ParentOrSitter" component={ParentOrSitter}/>
+            <Tab.Screen name="ParentOrSitter" component={ParentOrSitter} />
 
-            <Tab.Screen name="Availability" component={Availability}/>
+            <Tab.Screen name="Availability" component={Availability} />
         </Tab.Navigator>
     );
 };
