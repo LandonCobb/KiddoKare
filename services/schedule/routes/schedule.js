@@ -23,8 +23,6 @@ const kafka = new Kafka({
 });
 const producer = kafka.producer();
 
-
-
 export default [
   {
     url: "schedule/:_id",
@@ -54,22 +52,23 @@ export default [
             //   }
             // },
             {
-              $unwind: '$blocks'
+              $unwind: "$blocks",
             },
             {
               $match: {
-                'blocks.bookedParentId': parentId
-              }
+                "blocks.bookedParentId": parentId,
+              },
             },
             {
               $group: {
                 _id: null,
-                matchingBlocks: { $push: '$blocks' }
-              }
-            }
+                matchingBlocks: { $push: "$blocks" },
+              },
+            },
           ]).exec();
-      
-          const matchingBlocks = result.length > 0 ? result[0].matchingBlocks : [];
+
+          const matchingBlocks =
+            result.length > 0 ? result[0].matchingBlocks : [];
           console.log(matchingBlocks);
           return res.status(200).json(matchingBlocks);
         } catch (error) {
@@ -85,7 +84,9 @@ export default [
     handlers: [
       async (req, res) => {
         try {
-          const schedule = await ScheduleModel.create({sitterEmail: req.headers["x-email"]});
+          const schedule = await ScheduleModel.create({
+            sitterEmail: req.headers["x-email"],
+          });
           return res.status(201).send(schedule._id.toString());
         } catch {
           return res.sendStatus(500);
@@ -117,8 +118,8 @@ export default [
             { runValidators: true, new: true, upsert: false }
           );
           return res.status(201).json(schedule);
-        } catch  (err) {
-          console.log(err)
+        } catch (err) {
+          console.log(err);
           return res.sendStatus(400);
         }
       },
@@ -136,15 +137,23 @@ export default [
           //   "endHour": 8,
           //   "dayOfWeek": "Monday"
           // }
-          const schedule = await ScheduleModel.findById(req.params._id).lean()
-          const oldBlock = schedule.blocks.find(x => x.blockId === req.params.blockId)
-          if(!oldBlock) return res.status(404).json({message: "couldnt find block to update"})
+          const schedule = await ScheduleModel.findById(req.params._id).lean();
+          const oldBlock = schedule.blocks.find(
+            (x) => x.blockId === req.params.blockId
+          );
+          if (!oldBlock)
+            return res
+              .status(404)
+              .json({ message: "couldnt find block to update" });
           const updatedBlock = {
-            ...({...oldBlock, _id: oldBlock._id.toString()}),
-            ...req.body
-          }
+            ...{ ...oldBlock, _id: oldBlock._id.toString() },
+            ...req.body,
+          };
           console.log(updatedBlock);
-          const updatedBlocks = [...schedule.blocks.filter(x => x.blockId !== req.params.blockId), updatedBlock]
+          const updatedBlocks = [
+            ...schedule.blocks.filter((x) => x.blockId !== req.params.blockId),
+            updatedBlock,
+          ];
           const newSchedule = await ScheduleModel.findByIdAndUpdate(
             { _id: req.params._id },
             { $set: { blocks: updatedBlocks } },
@@ -214,11 +223,10 @@ export default [
               );
               //TODO: Send email
               const emailObject = {
-                "receiver": schedule.sitterEmail,
-                "subject": "Time Reserved",
-                "body": `Check your schedule! A new time has been reserved at ${newBlock.startHour} on ${newBlock.dateBooked}`
-
-              }
+                receiver: schedule.sitterEmail,
+                subject: "Time Reserved",
+                body: `Check your schedule! A new time has been reserved at ${newBlock.startHour} on ${newBlock.dateBooked}`,
+              };
               await producer.connect();
               await producer.send({
                 topic: "email",
@@ -245,10 +253,10 @@ export default [
             );
             // TODO: Send email
             const emailObject = {
-              "receiver": schedule.sitterEmail,
-              "subject": "Time Reserved",
-              "body": `Check your schedule! A new time has been reserved at ${newBlock.startHour} on ${newBlock.dateBooked}`
-            }
+              receiver: schedule.sitterEmail,
+              subject: "Time Reserved",
+              body: `Check your schedule! A new time has been reserved at ${newBlock.startHour} on ${newBlock.dateBooked}`,
+            };
             await producer.connect();
             await producer.send({
               topic: "email",
@@ -259,8 +267,8 @@ export default [
           return res
             .status(201)
             .json({ message: "No valid case for new booking" });
-        } catch (err){
-          console.log(err)
+        } catch (err) {
+          console.log(err);
           return res.sendStatus(500);
         }
       },
