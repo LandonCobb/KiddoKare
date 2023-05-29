@@ -3,3 +3,4 @@ data/
 .vscode/
 .env
 mobile-ui/ip.tsx
+mobile-ui/App.tsx
