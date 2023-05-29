@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, SafeAreaView, Text, TextInput, Button } from "react-native";
 import { Parent } from "../types/Parent";
+import ip from "../ip";
 
 const ParentProfile = () => {
     const [email, setEmail] = useState("");
@@ -62,7 +63,7 @@ const ParentProfile = () => {
     const [parent, setParent] = useState<Parent | undefined>();
 
     useEffect(() => {
-        fetch("http://192.168.50.24:8080/parent/byEmail", {
+        fetch("http://" + ip + ":8080/parent/byEmail", {
             headers: {
                 "X-Email": "coward@gmail.com",
             },
