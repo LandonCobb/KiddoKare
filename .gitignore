@@ -2,3 +2,4 @@ node_modules/
 data/
 .vscode/
 .env
+mobile-ui/ip.tsx
