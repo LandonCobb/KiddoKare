@@ -3,6 +3,7 @@ import {SafeAreaView, Text, TextInput, View, StyleSheet, Button} from "react-nat
 
 
 import {Sitter} from "../types/Sitter";
+import ip from "./ip";
 
 const SitterProfile = () => {
 
@@ -65,7 +66,7 @@ const SitterProfile = () => {
     const[sitter, setSitter] = useState<Sitter | undefined>();
 
     useEffect(() => {
-        fetch("http://172.20.10.4:8080/sitter/search/byEmail", {
+        fetch("http://"+ ip +":8080/sitter/search/byEmail", {
             headers: {
                 "X-Email":"Susan@gmail.com",
             },
