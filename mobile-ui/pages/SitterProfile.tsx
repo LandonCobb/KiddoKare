@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import {SafeAreaView, Text, TextInput, View, StyleSheet, Button} from "react-native";
+import { SafeAreaView, Text, TextInput, View, StyleSheet, Button } from "react-native";
 
-
-import {Sitter} from "../types/Sitter";
-import ip from "./ip";
+import { Sitter } from "../types/Sitter";
+import ip from "../ip";
 
 const SitterProfile = () => {
-
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
@@ -32,7 +30,7 @@ const SitterProfile = () => {
 
         ButtonContainer: {
             marginLeft: "5%",
-            marginTop: "5%"
+            marginTop: "5%",
         },
 
         RowContainer: {
@@ -63,33 +61,33 @@ const SitterProfile = () => {
     });
     const buttonColor = "#9e00ff";
 
-    const[sitter, setSitter] = useState<Sitter | undefined>();
+    const [sitter, setSitter] = useState<Sitter | undefined>();
 
     useEffect(() => {
-        fetch("http://"+ ip +":8080/sitter/search/byEmail", {
+        fetch("http://" + ip + ":8080/sitter/search/byEmail", {
             headers: {
-                "X-Email":"Susan@gmail.com",
+                "X-Email": "Susan@gmail.com",
             },
         })
-        .then((res) => res.json())
-        .then((data) => { 
-            setSitter(data)
-        });
+            .then((res) => res.json())
+            .then((data) => {
+                setSitter(data);
+            });
     }, []);
 
-    useEffect(()=>{
-        if(sitter){
+    useEffect(() => {
+        if (sitter) {
             setName(sitter.name);
             setAddress(sitter.address);
             if (sitter.bio) {
                 setBio(sitter.bio);
             }
-            
-            setEmail(sitter.email);        
+
+            setEmail(sitter.email);
         }
     }, [sitter]);
 
-    return(
+    return (
         <SafeAreaView style={styles.FormContainer}>
             <SafeAreaView style={styles.TextInputsContainer}>
                 <Text style={styles.Text}>Name:</Text>
@@ -117,10 +115,8 @@ const SitterProfile = () => {
             </SafeAreaView>
 
             <SafeAreaView style={styles.ButtonContainer}>
-            <Button title="Save Changes"  color={buttonColor}></Button>
+                <Button title="Save Changes" color={buttonColor}></Button>
             </SafeAreaView>
-
-
         </SafeAreaView>
     );
 };
