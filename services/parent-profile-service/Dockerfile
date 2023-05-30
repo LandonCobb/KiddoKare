@@ -8,7 +8,6 @@ FROM tomcat:11.0.0-jdk17
 COPY --from=build /home/app/target/parent-profile-service.war /usr/local/tomcat/webapps/ROOT.war
  
 ENV SERVER_PORT=8080
-ENV MONGO_HOST=mongo
-ENV MONGO_PORT=27017
-ENV MONGO_DB=ParentProfileDB
+ENV DB_HOST=mysql
+ENV DB_PORT=3306
 ENV EUREKA_HOST=eureka

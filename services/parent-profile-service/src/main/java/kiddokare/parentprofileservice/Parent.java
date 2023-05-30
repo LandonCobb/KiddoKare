@@ -1,12 +1,14 @@
 package kiddokare.parentprofileservice;
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
+@Entity
 public class Parent {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID parentUUID;
     private String name;
     private String password;

@@ -24,7 +24,8 @@ public class ParentRestController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email is already registered!");
         }
 
-        parent.setParentUUID(UUID.randomUUID()); // Generate UUID
+        // no need too with mysql now
+//        parent.setParentUUID(UUID.randomUUID()); // Generate UUID
         parentRepo.save(parent); // Save parent profile
     }
 
