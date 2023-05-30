@@ -37,6 +37,12 @@ public class SitterRestController {
         return sitterRepo.findByEmailContaining(email);
     }
 
+    @GetMapping("/search/searchForSitter/{term}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<Sitter> searchForSitter(@PathVariable String term) {
+        return sitterRepo.findSittersByBioOrAddressContainingIgnoreCase(term, term);
+    }
+
     // Post
     // localhost:8081/sitter (YOU NEED A BODY WITH A SITTER OBJ)
     @PostMapping(path = "/signup")

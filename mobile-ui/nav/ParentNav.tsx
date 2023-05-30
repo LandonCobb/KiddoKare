@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import ParentProfile from "../pages/ParentProfile";
 import ParentSchedule from "../pages/ParentSchedule";
 import Search from "../pages/Search";
+import SearchNav from "./SearchNav";
 
 const Tab = createBottomTabNavigator();
 
@@ -12,7 +13,7 @@ const ParentNav = () => {
             <Tab.Navigator>
                 <Tab.Screen name="Profile" component={ParentProfile} />
                 <Tab.Screen name="Schedule" component={ParentSchedule} />
-                <Tab.Screen name="Search" component={Search} />
+                <Tab.Screen name="SearchNav" component={SearchNav} />
             </Tab.Navigator>
         </NavigationContainer>
     );
