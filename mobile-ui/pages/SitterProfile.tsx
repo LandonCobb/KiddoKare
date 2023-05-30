@@ -17,13 +17,13 @@ const SitterProfile = () => {
             name: name,
             bio: bio,
             address: address,
-        }
+        };
 
         if (password != "") {
             obj = {
                 ...obj,
-                password: password
-            }
+                password: password,
+            };
         }
 
         console.log(obj);
@@ -35,14 +35,14 @@ const SitterProfile = () => {
                 Authorization: "Bearer " + token,
             },
             body: JSON.stringify(obj),
-        })
-    }
+        });
+    };
 
     const styles = StyleSheet.create({
         FormContainer: {
             flex: 1,
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
+            justifyContent: "space-evenly",
+            alignItems: "stretch",
             backgroundColor: "#212121",
         },
 
@@ -51,13 +51,13 @@ const SitterProfile = () => {
             alignItems: "stretch",
             borderRadius: 5,
             marginLeft: "5%",
-            marginTop: "5%",
-            width: "75%",
+            marginRight: "5%",
         },
 
         ButtonContainer: {
             marginLeft: "5%",
-            marginTop: "5%",
+            marginRight: "5%",
+            width: "40%",
         },
 
         RowContainer: {

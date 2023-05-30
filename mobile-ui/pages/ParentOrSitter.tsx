@@ -1,7 +1,8 @@
-import { Button, SafeAreaView, StyleSheet } from "react-native";
+import { StyleSheet, Button, SafeAreaView, View, Text, Pressable } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RouteParams } from "../nav/AuthNav";
 import { RouteProp } from "@react-navigation/native";
+import { color } from "@rneui/base";
 
 type ParentOrSitterProps = {
     navigation: StackNavigationProp<RouteParams, "Picker">;
@@ -15,8 +16,21 @@ const ParentOrSitter = ({ navigation }: ParentOrSitterProps) => {
 
     return (
         <SafeAreaView style={styles.FormContainer}>
-            <Button title="Parent" onPress={() => handlePress("parent")} />
-            <Button title="Sitter" onPress={() => handlePress("sitter")} />
+            <Text style={styles.TextHeader}>Welcome</Text>
+
+            <View style={styles.ButtonContainer}>
+                {/* DON'T USE THIS (WIP) */}
+                {/* <Pressable style={styles.Button}>
+                    <Text style={styles.ButtonText}>PARENT</Text>
+                </Pressable> */}
+                <Button title="Parent" color={buttonColor} onPress={() => handlePress("parent")} />
+            </View>
+
+            <Text style={styles.TextHeader2}>Or</Text>
+
+            <View style={styles.ButtonContainer}>
+                <Button title="Sitter" color={buttonColor} onPress={() => handlePress("sitter")} />
+            </View>
         </SafeAreaView>
     );
 };
@@ -39,8 +53,7 @@ const styles = StyleSheet.create({
     },
 
     ButtonContainer: {
-        marginLeft: "5%",
-        marginTop: "5%",
+        width: "25%",
     },
 
     RowContainer: {
@@ -53,8 +66,13 @@ const styles = StyleSheet.create({
         color: "#ffffff",
     },
 
+    TextHeader2: {
+        fontSize: 24,
+        fontWeight: "400",
+        color: "#a0a0a0",
+    },
+
     Text: {
-        marginBottom: "0.5%",
         fontSize: 20,
         fontWeight: "500",
         color: "#a0a0a0",
@@ -68,6 +86,31 @@ const styles = StyleSheet.create({
         color: "#ffffff",
         backgroundColor: "#181818",
     },
+
+    // DON'T USE THIS (WIP)
+    // Button: {
+    //     backgroundColor: "#9e00ff",
+    //     borderRadius: 2,
+    //     justifyContent: "center",
+    //     alignContent: "center",
+    //     padding: "5%",
+    //     shadowColor: "#ffffff",
+    //     shadowOpacity: 1.0,
+    //     shadowRadius: 5,
+    //     shadowOffset: { width: 0, height: 10 },
+    //     elevation: 1,
+    //     marginBottom: "10%",
+    // },
+
+    // ButtonText: {
+    //     color: "#ffffff",
+    //     fontSize: 18,
+    //     // iOS
+    //     alignItems: "center",
+    //     // Android
+    //     textAlignVertical: "center",
+    //     textAlign: "center",
+    // },
 });
 const buttonColor = "#9e00ff";
 
