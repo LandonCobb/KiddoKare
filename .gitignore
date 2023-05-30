@@ -1,5 +1,6 @@
 node_modules/
 data/
+mysqldata/
 .vscode/
 .env
 mobile-ui/ip.tsx

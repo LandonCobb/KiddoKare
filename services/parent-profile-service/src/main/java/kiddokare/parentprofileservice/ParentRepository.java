@@ -1,12 +1,13 @@
 package kiddokare.parentprofileservice;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ParentRepository extends MongoRepository<Parent, UUID> {
-    public Parent findByEmailContaining(String email);
+
+public interface ParentRepository extends JpaRepository<Parent, UUID> {
+    public Optional<Parent> findByEmailContaining(String email);
 
     public void deleteByEmailContaining(String email);
 
