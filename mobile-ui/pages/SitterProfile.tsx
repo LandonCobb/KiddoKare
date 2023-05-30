@@ -1,15 +1,42 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SafeAreaView, Text, TextInput, View, StyleSheet, Button } from "react-native";
 
 import { Sitter } from "../types/Sitter";
 import ip from "../ip";
+import { SecurityContext } from "../contexts/SecurityProvider";
 
 const SitterProfile = () => {
-    const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [password, setPassword] = useState("");
     const [bio, setBio] = useState("");
+    const { token } = useContext(SecurityContext);
+
+    const handSave = () => {
+        let obj: any = {
+            name: name,
+            bio: bio,
+            address: address,
+        }
+
+        if (password != "") {
+            obj = {
+                ...obj,
+                password: password
+            }
+        }
+
+        console.log(obj);
+
+        fetch("http://" + ip + ":8080/sitter", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify(obj),
+        })
+    }
 
     const styles = StyleSheet.create({
         FormContainer: {
@@ -66,7 +93,7 @@ const SitterProfile = () => {
     useEffect(() => {
         fetch("http://" + ip + ":8080/sitter/search/byEmail", {
             headers: {
-                "X-Email": "Susan@gmail.com",
+                Authorization: "Bearer " + token,
             },
         })
             .then((res) => res.json())
@@ -82,8 +109,6 @@ const SitterProfile = () => {
             if (sitter.bio) {
                 setBio(sitter.bio);
             }
-
-            setEmail(sitter.email);
         }
     }, [sitter]);
 
@@ -105,17 +130,12 @@ const SitterProfile = () => {
             </SafeAreaView>
 
             <SafeAreaView style={styles.TextInputsContainer}>
-                <Text style={styles.Text}>Email:</Text>
-                <TextInput style={styles.TextInput} onChangeText={setEmail} value={email} />
-            </SafeAreaView>
-
-            <SafeAreaView style={styles.TextInputsContainer}>
                 <Text style={styles.Text}>Password:</Text>
                 <TextInput style={styles.TextInput} onChangeText={setPassword} value={password} />
             </SafeAreaView>
 
             <SafeAreaView style={styles.ButtonContainer}>
-                <Button title="Save Changes" color={buttonColor}></Button>
+                <Button title="Save Changes" color={buttonColor} onPress={handSave}></Button>
             </SafeAreaView>
         </SafeAreaView>
     );

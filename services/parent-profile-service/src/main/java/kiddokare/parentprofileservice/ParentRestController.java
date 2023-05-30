@@ -38,46 +38,37 @@ public class ParentRestController {
     @GetMapping("/byEmail")
     @ResponseStatus(code = HttpStatus.OK)
     public Parent getParentProfileByEmail(@RequestHeader("X-Email") String email) {
-        return parentRepo.findByEmailContaining(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Parent does not exist!"));
+        return parentRepo.findByEmailContaining(email);
     }
 
     // Update
-    @PatchMapping("")
+    @PutMapping("")
     @ResponseStatus(code = HttpStatus.OK)
     public void updateParentProfile(@RequestHeader("X-Email") String email, @RequestBody Parent newParent) {
-        Optional<Parent> requestedParent = parentRepo.findByEmailContaining(email); // Search for the old parent
-        if (requestedParent.isPresent()) {
-            Parent oldParent = requestedParent.get(); // Store old parent
-
-            // If the new parent body is missing a field, it will replace it with old parent body's field
-            if (newParent.getName() == null) {
-                newParent.setName(oldParent.getName());
-            }
-
-            if (newParent.getPassword() == null) {
-                newParent.setPassword(oldParent.getPassword());
-            }
-
-            if (newParent.getEmail() == null) {
-                newParent.setEmail(oldParent.getEmail());
-            }
-
-            if (newParent.getAddress() == null) {
-                newParent.setAddress(oldParent.getAddress());
-            }
-
-            if (newParent.getBio() == null) {
-                newParent.setBio(oldParent.getBio());
-            }
-
-            newParent.setParentUUID(oldParent.getParentUUID()); // UUID should never change
-
-            parentRepo.save(newParent);
-        } else {
-            throw new NoSuchElementException(
-                    "Parent does not exist!"
-            );
+        
+        Parent oldParent = parentRepo.findByEmailContaining(email); // Search for the old parent
+        
+        // If the new parent body is missing a field, it will replace it with old parent body's field
+        if (newParent.getName() != null) {
+            oldParent.setName(newParent.getName());
         }
+
+        if (newParent.getPassword() != null) {
+            oldParent.setPassword(newParent.getPassword());
+        }
+
+        if (newParent.getEmail() != null) {
+            oldParent.setEmail(newParent.getEmail());
+        }
+
+        if (newParent.getAddress() != null) {
+            oldParent.setAddress(newParent.getAddress());
+        }
+
+        if (newParent.getBio() != null) {
+            oldParent.setBio(newParent.getBio());
+        }
+        parentRepo.save(oldParent);
     }
 
     // Delete
