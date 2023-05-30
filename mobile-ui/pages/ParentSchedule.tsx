@@ -20,7 +20,6 @@ const ParentSchedule = () => {
 
     useEffect(() => {
         fetch("http://" + ip + ":8080/schedule/parent/" + email)
-        // fetch("http://" + ip + ":8080/schedule/parent/coward@gmail.com")
         .then((res) => res.json())
         .then((data) => {
             setTimeBlocks(data);
@@ -34,12 +33,9 @@ const ParentSchedule = () => {
                 {timeBlocks && (
                     timeBlocks.map((block) => (
                         <View>
-                            <Text>Start Hour:</Text>
-                            <Text>{block.startHour}</Text>
-                            <Text>End Hour</Text>
-                            <Text>{block.endHour}</Text>
-                            <Text>Date</Text>
-                            <Text>{block.dateBooked.split(":")[0].slice(0,-3)}</Text>
+                            <Text>Start Hour: {block.startHour}</Text>
+                            <Text>End Hour: {block.endHour}</Text>
+                            <Text>Date: {block.dateBooked.split(":")[0].slice(0,-3)}</Text>
                         </View>
                     ))
                 )}
