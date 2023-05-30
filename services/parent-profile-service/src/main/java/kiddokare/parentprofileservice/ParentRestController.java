@@ -39,7 +39,7 @@ public class ParentRestController {
     @GetMapping("/byEmail")
     @ResponseStatus(code = HttpStatus.OK)
     public Parent getParentProfileByEmail(@RequestHeader("X-Email") String email) {
-        return parentRepo.findByEmailContaining(email);
+        return parentRepo.findByEmailContaining(email).get();
     }
 
     // Update
@@ -47,7 +47,7 @@ public class ParentRestController {
     @ResponseStatus(code = HttpStatus.OK)
     public void updateParentProfile(@RequestHeader("X-Email") String email, @RequestBody Parent newParent) {
         
-        Parent oldParent = parentRepo.findByEmailContaining(email); // Search for the old parent
+        Parent oldParent = parentRepo.findByEmailContaining(email).get(); // Search for the old parent
         
         // If the new parent body is missing a field, it will replace it with old parent body's field
         if (newParent.getName() != null) {

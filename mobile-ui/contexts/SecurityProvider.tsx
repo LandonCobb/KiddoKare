@@ -6,6 +6,8 @@ interface SecurityContextType {
     setToken: Dispatch<SetStateAction<string>>;
     type: "sitter" | "parent" | "";
     setType: Dispatch<SetStateAction<"sitter" | "parent" | "">>;
+    email: string;
+    setEmail: Dispatch<SetStateAction<string>>;
 }
 
 export const SecurityContext = createContext<SecurityContextType>({
@@ -13,11 +15,14 @@ export const SecurityContext = createContext<SecurityContextType>({
     setToken: () => {},
     type: "",
     setType: () => {},
+    email: "",
+    setEmail: () => {},
 });
 
 const SecurityProvider = ({ children }: { children: JSX.Element }) => {
     const [token, setToken] = useState<string>("");
     const [type, setType] = useState<"sitter" | "parent" | "">("");
+    const [email, setEmail] = useState("");
 
     useEffect(() => {
         AsyncStorage.setItem("FINAL::TOKEN", token);
@@ -41,7 +46,11 @@ const SecurityProvider = ({ children }: { children: JSX.Element }) => {
         });
     }, []);
 
-    return <SecurityContext.Provider value={{ token, setToken, type, setType }}>{children}</SecurityContext.Provider>;
+    return (
+        <SecurityContext.Provider value={{ token, setToken, type, setType, email, setEmail }}>
+            {children}
+        </SecurityContext.Provider>
+    );
 };
 
 export default SecurityProvider;
