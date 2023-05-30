@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     FormContainer: {
         flex: 1,
         justifyContent: "space-evenly",
-        alignItems: "center",
+        alignItems: "stretch",
         backgroundColor: "#212121",
     },
 
@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "stretch",
         borderRadius: 5,
-        width: "75%",
+        marginLeft: "5%",
+        marginRight: "5%",
     },
 
     ButtonContainer: {
@@ -85,12 +86,18 @@ const styles = StyleSheet.create({
 
     RowContainer: {
         flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
     },
 
     TextHeader: {
         fontSize: 48,
         fontWeight: "300",
         color: "#ffffff",
+        // iOS
+        alignItems: "center",
+        // Android
+        textAlign: "center",
     },
 
     Text: {
