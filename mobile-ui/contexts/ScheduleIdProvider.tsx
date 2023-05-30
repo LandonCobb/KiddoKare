@@ -21,9 +21,7 @@ const ScheduleIdProvider = ({ children }: { children: JSX.Element }) => {
         })
             .then((res) => res.json())
             .then((data) => {
-                if (scheduleId) {
-                    setScheduleId(data.scheduleId);
-                }
+                setScheduleId(data.scheduleId);
             });
     }, []);
 

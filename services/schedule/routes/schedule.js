@@ -46,18 +46,19 @@ export default [
     handlers: [
       async (req, res) => {
         try {
-          ScheduleModel.aggregate([
-            {
-              $match: {
-                'blocks.bookedParentId': { $ne: null }
-              }
-            },
+          const parentId = req.params.pId;
+          const result = await ScheduleModel.aggregate([
+            // {
+            //   $match: {
+            //     'blocks.bookedParentId': { $ne: null }
+            //   }
+            // },
             {
               $unwind: '$blocks'
             },
             {
               $match: {
-                'blocks.bookedParentId': { $ne: null }
+                'blocks.bookedParentId': parentId
               }
             },
             {
@@ -66,18 +67,13 @@ export default [
                 matchingBlocks: { $push: '$blocks' }
               }
             }
-          ])
-            .exec((err, result) => {
-              if (err) {
-                // Handle error
-                console.error(err);
-                return res.status(404).json(null);
-              } else {
-                const matchingBlocks = result.length > 0 ? result[0].matchingBlocks : [];
-                return res.status(200).json(matchingBlocks);
-              }
-            }); 
-        } catch {
+          ]).exec();
+      
+          const matchingBlocks = result.length > 0 ? result[0].matchingBlocks : [];
+          console.log(matchingBlocks);
+          return res.status(200).json(matchingBlocks);
+        } catch (error) {
+          console.error(error);
           return res.status(404).json(null);
         }
       },

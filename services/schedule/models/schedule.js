@@ -26,7 +26,7 @@ const scheduleSchema = new Schema(
             default: null,
           },
           bookedParentId: {
-            type: ObjectId,
+            type: String,
             default: null,
           },
         },

@@ -4,6 +4,7 @@ services:
 
   #----Gateway----
   gateway:
+    container_name: gateway
     build: ./services/Gateway
     ports:
       - "8080:8080"

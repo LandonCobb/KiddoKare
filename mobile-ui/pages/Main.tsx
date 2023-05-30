@@ -4,15 +4,16 @@ import { SecurityContext } from "../contexts/SecurityProvider";
 import AuthNav from "../nav/AuthNav";
 import SitterNav from "../nav/SitterNav";
 import ParentNav from "../nav/ParentNav";
+import SitterMain from "./SitterMain";
 
 const Main = () => {
     const { type } = useContext(SecurityContext);
 
     useEffect(() => {
-        console.log(type);
+        // console.log(type);
     }, []);
 
-    return type == "" ? <AuthNav /> : type == "sitter" ? <SitterNav /> : <ParentNav />;
+    return type == "" ? <AuthNav /> : type == "sitter" ? <SitterMain /> : <ParentNav />;
 };
 
 export default Main;
