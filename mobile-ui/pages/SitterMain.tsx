@@ -8,3 +8,5 @@ const SitterMain = () => {
         </ScheduleIdProvider>
     );
 };
+
+export default SitterMain;

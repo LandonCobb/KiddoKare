@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class SitterRestController {
     // localhost:8081/sitter (YOU NEED A BODY WITH A SITTER OBJ)
     @PostMapping(path = "/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createSitter(@RequestBody Sitter sitter) {
+    public String createSitter(@RequestBody Sitter sitter) {
 
         Sitter sitterAlreadyExisting = sitterRepo.findByEmailContaining(sitter.getEmail());
 
@@ -59,11 +60,17 @@ public class SitterRestController {
 
             RestTemplate rest = new RestTemplate();
 
-            String response = rest.postForObject(url, new HttpEntity<>(""), String.class);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("X-Email", sitter.getEmail());
+
+            HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+            String response = rest.postForObject(url, entity, String.class);
 
             sitter.setSitterUUID(UUID.randomUUID());
             sitter.setScheduleId(response);
             sitterRepo.save(sitter);
+            return response;
         } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already registered");
         }
