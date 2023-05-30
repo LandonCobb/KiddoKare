@@ -13,8 +13,8 @@ type LoginProps = {
 
 const Login = ({ navigation, route }: LoginProps) => {
     const { type } = route.params;
-    const { setToken, setType } = useContext(SecurityContext);
-    const [email, setEmail] = useState("");
+    const { setToken, setType, setEmail } = useContext(SecurityContext);
+    const [email, setEmailText] = useState("");
     const [password, setPassword] = useState("");
 
     const handleLogin = () => {
@@ -31,6 +31,7 @@ const Login = ({ navigation, route }: LoginProps) => {
             if (res.ok) {
                 res.text().then((token) => {
                     setToken(token);
+                    setEmail(email);
                     setType(type);
                 });
             }
@@ -43,7 +44,7 @@ const Login = ({ navigation, route }: LoginProps) => {
 
             <SafeAreaView style={styles.TextInputsContainer}>
                 <Text style={styles.Text}>Email:</Text>
-                <TextInput style={styles.TextInput} onChangeText={setEmail} value={email} />
+                <TextInput style={styles.TextInput} onChangeText={setEmailText} value={email} />
             </SafeAreaView>
 
             <SafeAreaView style={styles.TextInputsContainer}>
