@@ -62,7 +62,6 @@ services:
 
   #----Parent----
   parent-profile-service:
-    container_name: Parent-Profile-Service
     build:
       context: ./services/parent-profile-service
       dockerfile: Dockerfile
