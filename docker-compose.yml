@@ -105,8 +105,8 @@ services:
     container_name: email_service
     build: ./services/email
     environment:
-      - SENDER=terrence.macgyver62@ethereal.email
-      - SENDER_PASSWORD=k5jY36pyhuPGUweXTE8G7ZDJKx5N7teXsXXc
+      - SENDER=vicky.schimmel@ethereal.email
+      - SENDER_PASSWORD=3PEY3UTPeWgaE9648c
       - KAFKA_HOST=broker:9092
       - EMAIL_TOPIC=email
     depends_on:

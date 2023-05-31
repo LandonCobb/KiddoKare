@@ -16,6 +16,8 @@ public class RegConfig {
                         .uri("lb://schedule"))
                 .route("SitterProfileAPI", r -> r.path("/sitter/signup")
                         .uri("lb://SitterProfileAPI"))
+                .route("SitterProfileAPI", r -> r.path("/sitter/search/searchForSitter/**")
+                        .uri("lb://SitterProfileAPI"))
                 .route("SitterProfileAPI", r -> r.path("/sitter/**")
                         .filters(f -> f.filter(new JwtFilter()))
                         .uri("lb://SitterProfileAPI"))

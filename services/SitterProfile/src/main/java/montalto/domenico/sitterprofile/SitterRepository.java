@@ -8,4 +8,6 @@ public interface SitterRepository extends MongoRepository<Sitter, UUID> {
 
     public void deleteByEmail(String txt);
 
+    List<Sitter> findSittersByBioOrAddressContainingIgnoreCase(String bio, String address);
+
 }

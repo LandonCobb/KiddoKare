@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import ParentProfile from "../pages/ParentProfile";
 import ParentSchedule from "../pages/ParentSchedule";
 import Search from "../pages/Search";
+import SearchNav from "./SearchNav";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +23,7 @@ const ParentNav = () => {
             >
                 <Tab.Screen options={{ headerTitle: "Profile Information" }} name="Profile" component={ParentProfile} />
                 <Tab.Screen options={{ headerTitle: "Your Schedule" }} name="Schedule" component={ParentSchedule} />
-                <Tab.Screen options={{ headerTitle: "Search for Sitters" }} name="Search" component={Search} />
+                <Tab.Screen options={{ headerTitle: "Search for Sitters" }} name="SearchNav" component={SearchNav} />
             </Tab.Navigator>
         </NavigationContainer>
     );
