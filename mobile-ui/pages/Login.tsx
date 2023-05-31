@@ -28,6 +28,7 @@ const Login = ({ navigation, route }: LoginProps) => {
                 password: password,
             }),
         }).then((res) => {
+            console.log(type)
             if (res.ok) {
                 res.text().then((token) => {
                     setToken(token);

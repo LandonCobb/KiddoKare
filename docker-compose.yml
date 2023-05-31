@@ -95,8 +95,9 @@ services:
       - eureka
       - mongo
     environment:
-      - MONGO_URI=mongodb://mongo:27017/ParentProfileDB
       - EUREKA_URL=http://eureka:8761/eureka
+      - DB_HOST=mysql
+      - DB_PORT=3306
     networks:
       - net
 
